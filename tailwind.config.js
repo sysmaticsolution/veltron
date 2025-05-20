@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-montserrat)', 'sans-serif'],
+        heading: ['var(--font-orbitron)', 'sans-serif'],
+        body: ['var(--font-poppins)', 'sans-serif'],
+      },
       // 3D Transform utilities for parallax effects
       transformStyle: {
         'flat': 'flat',

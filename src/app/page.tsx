@@ -8,7 +8,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ParticlesBackground } from "@/components/particles-background";
-import generateStructuredData from "./structured-data";
+import generateStructuredData from "./structured-data-gen";
 
 // Service cards data
 const services = [
@@ -216,7 +216,7 @@ const services = [
           
           {/* Search Input */}
           <div className="w-full h-3 bg-zinc-800 rounded-full mb-2 flex items-center px-1">
-            <div className="text-[5px] text-zinc-400 animate-pulse" style={{animationDuration: '2s', animationIterationCount: 'infinite'}}>veltron.com</div>
+            <div className="text-[5px] text-zinc-400 animate-pulse" style={{animationDuration: '2s', animationIterationCount: 'infinite'}}>veltron.in</div>
             <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary/80"></div>
           </div>
           
@@ -496,7 +496,7 @@ export default function Home() {
     
     // Parallax background effect for services-courses section
     gsap.to(".services-courses-parallax-bg", {
-      yPercent: -30,
+      yPercent: -10,
       ease: "none",
       scrollTrigger: {
         trigger: ".bg-services-courses-section",
@@ -525,42 +525,18 @@ export default function Home() {
       { opacity: 1, y: 0, duration: 1, delay: 0.7 }
     );
     
-    // Services section animation
+    // Services section - removed scroll animations per user request
     const serviceCards = gsap.utils.toArray('.service-card') as HTMLElement[];
-    serviceCards.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 30 },
-        {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-          },
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: i * 0.1
-        }
-      );
+    serviceCards.forEach((card) => {
+      // Set cards to be visible by default without animation
+      gsap.set(card, { opacity: 1, y: 0 });
     });
     
-    // Course categories animation
+    // Course categories - removed scroll animations per user request
     const courseCards = gsap.utils.toArray('.course-card') as HTMLElement[];
-    courseCards.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, scale: 0.9 },
-        {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-          },
-          opacity: 1,
-          scale: 1,
-          duration: 0.5,
-          delay: i * 0.1
-        }
-      );
+    courseCards.forEach((card) => {
+      // Set cards to be visible by default without animation
+      gsap.set(card, { opacity: 1, scale: 1 });
     });
     
     // Stats counter animation
@@ -619,14 +595,13 @@ export default function Home() {
           
         <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-20 text-center">
           <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-10xl font-bold tracking-tight mb-6">
-            <span className="bg-clip-text ">
-              Veltron
-            </span> Sysmatic Solution
+            
+              Veltron Sysmatic Solution 
           </h1>
           <p className="hero-text text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Empowering businesses through innovative technology solutions and professional training
+            Empowering Businesses With Innovation & Strategic Empowerment
           </p>
-          <p className="hero-text text-primary text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-5">
+          <p className="hero-text text-primary text-lg md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-5">
           Web Development | Digital Marketing | SEO Services | Data Analytics | Mobile App Development | Web Application Development</p>
           <div className="hero-buttons flex flex-wrap justify-center gap-4 mt-8">
             <Button 

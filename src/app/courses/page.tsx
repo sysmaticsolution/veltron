@@ -6,6 +6,12 @@ import AnimatedParticles from "@/components/AnimatedParticles";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+// Dynamically import the mobile course view component with SSR disabled
+const MobileCourseView = dynamic(() => import("@/components/courses/MobileCourseView"), {
+  ssr: false, // Disable server-side rendering to avoid hydration issues with mobile detection
+});
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -523,14 +529,28 @@ export default function CoursesPage() {
       // Calculate the scroll position relative to the container
       const container = middleContainerRef.current;
       const targetElement = courseSectionRefs.current[index];
-      const containerRect = container.getBoundingClientRect();
-      const targetRect = targetElement.getBoundingClientRect();
       
-      // Scroll the middle container to show the selected course section (without smooth behavior)
-      container.scrollTo({
-        top: targetElement.offsetTop - container.offsetTop
-        // smooth behavior removed
-      });
+      // For mobile view, ensure we scroll to the top of the selected course element
+      // with a small offset to account for the sticky header
+      const isMobile = window.innerWidth < 768;
+      const mobileOffset = isMobile ? 20 : 0; // Small offset for mobile
+      
+      // Scroll the middle container to show the selected course section
+      setTimeout(() => {
+        container.scrollTo({
+          top: targetElement.offsetTop - container.offsetTop - mobileOffset,
+          behavior: isMobile ? 'smooth' : 'auto' // Smooth scrolling on mobile for better UX
+        });
+        
+        // On mobile, also scroll the page to position the middle container at the top
+        if (isMobile) {
+          const middleContainerTop = container.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: middleContainerTop - 80, // Account for the sticky header
+            behavior: 'smooth'
+          });
+        }
+      }, 50); // Small timeout to ensure elements are properly rendered
     }
   };
   
@@ -541,6 +561,29 @@ export default function CoursesPage() {
       setFormState(prev => ({ ...prev, course: courses[activeSection].title }));
     }
   }, [activeSection]);
+  
+  // Desktop-specific effects - mobile handling moved to MobileCourseView component
+  useEffect(() => {
+    // Only add desktop-specific class when on desktop
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        document.body.classList.add('desktop-courses-view');
+      } else {
+        document.body.classList.remove('desktop-courses-view');
+      }
+    };
+    
+    // Call once on mount
+    handleResize();
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.body.classList.remove('desktop-courses-view');
+    };
+  }, []);
 
   // Function to handle separate scrolling
   const handleSeparateScrolling = () => {
@@ -573,34 +616,11 @@ export default function CoursesPage() {
       touchStartX = e.touches[0].clientX;
     };
     
-    // Handle touch move event for scrolling on mobile
+    // Modified touch move handler to improve mobile scrolling
     const handleTouchMove = (e: TouchEvent) => {
-      if (!e.touches[0]) return;
-      
-      const container = e.currentTarget as HTMLElement;
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      
-      const touchY = e.touches[0].clientY;
-      const touchX = e.touches[0].clientX;
-      
-      // Calculate touch direction and distance
-      const deltaY = touchStartY - touchY;
-      const deltaX = touchStartX - touchX;
-      
-      // If horizontal scrolling is greater than vertical, let the browser handle it
-      if (Math.abs(deltaX) > Math.abs(deltaY)) return;
-      
-      // Check if we're at the top or bottom of the container
-      if (
-        (deltaY > 0 && scrollTop + clientHeight >= scrollHeight) || // Scrolling down at bottom
-        (deltaY < 0 && scrollTop <= 0) // Scrolling up at top
-      ) {
-        // We're at the edge, don't prevent default to allow page scrolling
-        return;
-      }
-      
-      // Otherwise prevent default to enable container scrolling without page scrolling
-      e.preventDefault();
+      // Don't interfere with native mobile scrolling
+      // This allows the browser's native touch scrolling to work properly
+      return true;
     };
     
     // Middle section scroll handler to sync the left sidebar
@@ -647,26 +667,31 @@ export default function CoursesPage() {
     // Apply events to all course scroll containers
     const containers = document.querySelectorAll('.courses-scroll-container');
     containers.forEach(container => {
-      // Add mouse wheel event
-      container.addEventListener('wheel', handleWheelOnContainer);
+      // Add mouse wheel event - only for desktop
+      if (window.innerWidth > 768) {
+        container.addEventListener('wheel', handleWheelOnContainer);
+      }
       
-      // Add touch events for mobile
+      // Touch events - now passive to allow native scrolling
       container.addEventListener('touchstart', handleTouchStart as EventListener, { passive: true });
-      container.addEventListener('touchmove', handleTouchMove as EventListener, { passive: false }); // non-passive to allow preventDefault
+      // Don't add custom touchmove handlers for mobile to allow native scrolling behavior
     });
     
-    // Make middle container touch-action: pan-y to improve native scrolling
+    // Configure middle container for better mobile scrolling
     if (middleContainerRef.current) {
+      // Use native touch scrolling - standard property
       middleContainerRef.current.style.touchAction = 'pan-y';
       middleContainerRef.current.addEventListener('scroll', handleMiddleSectionScroll);
     }
     
     return () => {
       containers.forEach(container => {
-        // Clean up all event listeners
-        container.removeEventListener('wheel', handleWheelOnContainer);
+        // Clean up event listeners
+        if (window.innerWidth > 768) {
+          container.removeEventListener('wheel', handleWheelOnContainer);
+        }
         container.removeEventListener('touchstart', handleTouchStart as EventListener);
-        container.removeEventListener('touchmove', handleTouchMove as EventListener);
+        // No touchmove listener to remove since we're not adding it
       });
       
       if (middleContainerRef.current) {
@@ -864,30 +889,16 @@ export default function CoursesPage() {
         </div>
       </section>
       
-      {/* Mobile Course Selector (visible only on small screens) */}
-      <section className="py-8 bg-muted/10 md:hidden sticky top-0 z-10">
-        <div className="container mx-auto px-4">
-          <h2 className="text-xl font-semibold mb-4">Our Courses</h2>
-          <div className="relative">
-            <select 
-              className="w-full p-3 bg-background border border-input rounded-md appearance-none pr-10"
-              value={activeSection.toString()}
-              onChange={(e) => handleCourseClick(parseInt(e.target.value))}
-            >
-              {courses.map((course, index) => (
-                <option key={`mobile-course-${course.id}-${index}`} value={index.toString()}>
-                  {course.title}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Mobile View - Only shown on small screens */}
+      <div className="md:hidden">
+        <MobileCourseView 
+          courses={courses}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          formState={formState}
+          setFormState={setFormState}
+        />
+      </div>
 
       {/* Courses Section with Scrollable Middle Section */}
       <section className="py-8 md:py-16 bg-muted/10">
@@ -943,14 +954,15 @@ export default function CoursesPage() {
               </div>
             </div>
             
-            {/* Course Details (Middle Section - Scrollable) */}
+            {/* Course Details (Middle Section - Scrollable) - Desktop Only */}
             <div 
               ref={middleContainerRef} 
-              className="col-span-1 md:col-span-7 lg:col-span-8 courses-content courses-scroll-container max-h-[calc(100vh-100px)] md:max-h-[calc(100vh-100px)] px-4 overflow-y-auto overflow-x-hidden"
+              className="col-span-1 md:col-span-7 lg:col-span-8 courses-content courses-scroll-container md:max-h-[calc(100vh-100px)] px-4 overflow-y-auto overflow-x-hidden hidden md:block"
               style={{ 
-                WebkitOverflowScrolling: 'touch', /* Enable smooth scrolling on iOS */
                 touchAction: 'pan-y', /* Allow vertical touch scrolling */
-                overscrollBehavior: 'contain' /* Prevent pull-to-refresh */
+                overscrollBehavior: 'auto', /* Allow native scrolling behavior */
+                scrollbarWidth: 'thin', /* Thin scrollbar on Firefox */
+                paddingBottom: '30px' /* Extra padding at bottom */
               }}
               onMouseEnter={(e) => {
                 // Prevent page scrolling when hovering over course content
@@ -967,7 +979,7 @@ export default function CoursesPage() {
                   key={course.id} 
                   id={course.id} 
                   ref={(el) => { courseSectionRefs.current[index] = el; }}
-                  className={`min-h-[calc(100vh-200px)] py-6 md:py-10 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'} rounded-xl mb-10 p-4 md:p-6 border-l-4 ${activeSection === index ? 'border-primary' : 'border-transparent'} transition-all duration-300 course-section-scroll touch-pan-y mobile-course-section`}
+                  className={`min-h-[65vh] md:min-h-[calc(100vh-200px)] py-6 md:py-10 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'} rounded-xl mb-10 p-4 md:p-6 border-l-4 ${activeSection === index ? 'border-primary' : 'border-transparent'} transition-all duration-300 course-section-scroll touch-pan-y mobile-course-section ${activeSection === index ? 'active-mobile-course' : 'inactive-mobile-course'}`}
                 >
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 md:mb-8 mobile-course-header">
                     <div className="p-3 md:p-4 rounded-full bg-primary/10">

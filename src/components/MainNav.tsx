@@ -128,7 +128,9 @@ export default function MainNav() {
               <Image src="/veltron-logo.png" alt="Veltron Logo" fill priority className="object-contain" />
             </div>
             <div className="overflow-hidden">
-              <span className="text-4xl font-extrabold text-shine ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1">Veltron</span>
+              
+              <span className="text-4xl font-extrabold text-shine ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1"></span>
+            
             </div>
           </Link>
 

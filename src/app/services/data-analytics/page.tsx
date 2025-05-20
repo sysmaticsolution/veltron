@@ -18,7 +18,7 @@ export default function DataAnalyticsPage() {
       { 
         year: 2023, 
         revenueGrowth: '+22%', 
-        revenueChange: '+3.8% from last year',
+        revenueChange: '+3.8% from LY',
         newCustomers: '980', 
         customerChange: '+8% this quarter',
         efficiencyRate: '94.2%', 
@@ -29,7 +29,7 @@ export default function DataAnalyticsPage() {
       { 
         year: 2024, 
         revenueGrowth: '+25%', 
-        revenueChange: '+4.5% from last year',
+        revenueChange: '+4.5% from LY',
         newCustomers: '1,120', 
         customerChange: '+10% this quarter',
         efficiencyRate: '96.3%', 
@@ -40,7 +40,7 @@ export default function DataAnalyticsPage() {
       { 
         year: 2025, 
         revenueGrowth: '+28%', 
-        revenueChange: '+5.2% from last year',
+        revenueChange: '+5.2% from LY',
         newCustomers: '1,245', 
         customerChange: '+12% this quarter',
         efficiencyRate: '97.5%', 
@@ -314,7 +314,7 @@ export default function DataAnalyticsPage() {
           <div className="header-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-6xl sm:text-7xl font-bold mb-6 text-white">
-                Data Analytics <span className="text-primary">Solutions</span>
+                Data Analytics Solutions
               </h1>
               <p className="text-xl text-zinc-300 mb-8">
                 Transform your raw data into actionable insights with our advanced analytics solutions that drive business growth and innovation.
@@ -359,7 +359,7 @@ export default function DataAnalyticsPage() {
                     <div className="text-xs text-blue-300 mb-1 font-medium">Revenue Growth</div>
                     <div className="text-xl font-bold text-white kpi-revenue-growth">+28%</div>
                     <div className="text-xs text-blue-300 flex items-center mt-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                       <span className="kpi-revenue-change">+5.2% from last year</span>
                     </div>
                   </div>

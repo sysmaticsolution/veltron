@@ -79,7 +79,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm text-muted-foreground max-w-xs"
           >
-            Empowering businesses through innovative technology solutions and education.
+            Empowering Businesses With Innovation & Strategic Empowerment.
           </motion.div>
         </motion.div>
 
