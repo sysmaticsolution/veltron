@@ -4,8 +4,14 @@ import { PresentationControls, Environment, ContactShadows, Html, RoundedBox, Bo
 import { gsap } from 'gsap';
 import * as THREE from 'three';
 
+// Define props interface for PhoneModel
+interface PhoneModelProps {
+  scrollY: number;
+  [key: string]: any; // For other props
+}
+
 // 3D Phone Model Component
-function PhoneModel({ scrollY, ...props }) {
+function PhoneModel({ scrollY, ...props }: PhoneModelProps) {
   const group = useRef<THREE.Group>(null);
   const screenRef = useRef<THREE.Mesh>(null);
   const [screen, setScreen] = useState(0);
