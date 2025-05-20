@@ -5,28 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-// Replace GSAP with Framer Motion for animations
-import { motion, useAnimation, useInView, stagger } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ParticlesBackground } from "@/components/particles-background";
 import generateStructuredData from "./structured-data";
-
-// Animation variants for Framer Motion
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-      when: "beforeChildren"
-    }
-  }
-};
 
 // Service cards data
 const services = [
@@ -719,47 +701,38 @@ export default function Home() {
               </p>
             </div>
             
-            {/* Using Framer Motion for continuous animations */}
-            <motion.div 
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }}
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service, index) => (
-                <motion.div 
-                  key={index}
-                  variants={cardVariants}
-                  className="group"
-                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                <Card 
+                  key={index} 
+                  className="service-card border border-white/20 bg-background shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-300 relative overflow-hidden group"
+                  style={{
+                    animationDelay: `${index * 0.2}s`,
+                  }}
+                  onMouseMove={(e) => {
+                    const card = e.currentTarget;
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                  }}
                 >
-                  <Card 
-                    className="service-card border border-white/20 bg-background shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-300 relative overflow-hidden h-full"
-                    onMouseMove={(e) => {
-                      const card = e.currentTarget;
-                      const rect = card.getBoundingClientRect();
-                      const x = e.clientX - rect.left; 
-                      const y = e.clientY - rect.top;
-                      const centerX = rect.width / 2;
-                      const centerY = rect.height / 2;
-                      const rotateX = (y - centerY) / 10;
-                      const rotateY = (centerX - x) / 10;
-                      
-                      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                    }}
-                  >
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   {/* Animated shine effect */}
                   <div className="absolute -inset-full h-[200%] w-[200%] rotate-45 translate-x-1/2 -z-10 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[shimmer_1s_ease-in-out]"></div>
                   
                   <CardContent className="p-6 flex flex-col items-center text-center relative z-10">
-                    <motion.div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 service-card-icon" whileHover={{ scale: 1.1 }}>
+                    <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 service-card-icon" style={{animationDelay: `${index * 0.3}s`}}>
                       {service.icon}
-                    </motion.div>
+                    </div>
                     <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                     <p className="text-muted-foreground mb-4">{service.description}</p>
                     <Link href={service.link} className="text-primary hover:underline mt-auto flex items-center">
@@ -771,9 +744,10 @@ export default function Home() {
                     </Link>
                   </CardContent>
                 </Card>
-                </motion.div>
               ))}
-            </motion.div>
+            </div>
+            
+            
           </div>
         </section>
 
