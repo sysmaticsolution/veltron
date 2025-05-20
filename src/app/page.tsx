@@ -14,7 +14,7 @@ import generateStructuredData from "./structured-data";
 const services = [
   {
     title: "Data Analytics",
-    description: "Comprehensive training in Tableau, Power BI, SQL, and Python for data professionals.",
+    description: "Transform your raw data into actionable insights with our comprehensive data analytics solutions.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -54,8 +54,8 @@ const services = [
     link: "/services/data-analytics",
   },
   {
-    title: "Power BI",
-    description: "Master Microsoft Power BI to transform raw data into stunning interactive visualizations and powerful business intelligence solutions.",
+    title: "Web Development",
+    description: "Custom, responsive, and high-performance websites designed to elevate your brand and deliver exceptional user experiences.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -85,11 +85,11 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#power-bi",
+    link: "/services/web-development",
   },
   {
-    title: "Java Fullstack",
-    description: "Comprehensive training in Java, Spring Boot, Hibernate, and modern frontend frameworks for enterprise applications.",
+    title: "Digital Marketing",
+    description: "Strategic digital marketing solutions to boost your online presence, reach your target audience, and drive measurable results.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -140,8 +140,8 @@ const services = [
     link: "/courses#java-fullstack",
   },
   {
-    title: ".NET Complete",
-    description: "Comprehensive training in .NET framework and C# for building enterprise applications, web services, and cloud solutions.",
+    title: "Web Application",
+    description: "Scalable web applications with robust architecture, intuitive user interfaces, and powerful backend systems that drive business growth.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -199,8 +199,8 @@ const services = [
     link: "/courses#dotnet",
   },
   {
-    title: "Salesforce",
-    description: "Comprehensive training in Salesforce development, administration, and implementation for cloud-based enterprise solutions.",
+    title: "Mobile App Development",
+    description: "Native and cross-platform mobile applications built for performance, usability, and seamless integration with your business systems.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -240,8 +240,8 @@ const services = [
     link: "/courses#salesforce",
   },
   {
-    title: "SQL",
-    description: "Master SQL for managing databases, writing complex queries, and extracting valuable business insights from your data.",
+    title: "SEO Services",
+    description: "Data-driven SEO strategies to improve search visibility, increase organic traffic, and maximize your online reach and conversions.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -251,9 +251,9 @@ const services = [
             <div className="h-1.5 bg-zinc-800 flex items-center justify-between px-1">
               <div className="text-[4px] text-zinc-400">9:41</div>
               <div className="flex items-center gap-0.5">
-                <div className="w-0.5 h-0.5 bg-zinc-400 rounded-full"></div>
-                <div className="w-0.5 h-0.5 bg-zinc-400 rounded-full"></div>
-                <div className="w-0.5 h-0.5 bg-zinc-400 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
               </div>
             </div>
             
@@ -295,11 +295,11 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#sql",
+    link: "/services/seo-services",
   },
   {
-    title: "Python",
-    description: "Learn Python programming from scratch and master essential libraries for data analysis, machine learning, and automation.",
+    title: "Corporate Training",
+    description: "Customized technology training programs designed to upskill your workforce and keep your team at the cutting edge of industry developments.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -352,11 +352,11 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#python",
+    link: "/services/corporate-training",
   },
   {
-    title: "Tableau",
-    description: "Become proficient in Tableau, the leading data visualization platform, to create powerful, interactive dashboards and business intelligence solutions.",
+    title: "Skill Development",
+    description: "Comprehensive technology training programs to enhance your team's capabilities with modern tools, languages, and frameworks for professional growth.",
     icon: (
       <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
         <div className="w-full h-full flex flex-col">
@@ -406,7 +406,7 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#tableau",
+    link: "/services/skill-development",
   },
 ];
 
