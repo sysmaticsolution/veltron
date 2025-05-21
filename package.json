@@ -48,5 +48,22 @@
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.3.0",
     "typescript": "^5"
+  },
+  "browserslist": {
+    "production": [
+      ">= 0.5%",
+      "last 2 versions",
+      "Firefox ESR",
+      "not dead",
+      "not IE 11",
+      "not op_mini all",
+      "not android <= 4.4",
+      "not samsung <= 4"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
