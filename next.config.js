@@ -21,19 +21,9 @@ const nextConfig = {
   },
   poweredByHeader: false,
   compress: true,
-  // Optimize bundle size by reducing unused JavaScript
-  swcMinify: true,
   // Enhance JavaScript optimization
   experimental: {
-    optimizeCss: true,
-    // Improve tree-shaking to reduce unused code
-    turbotrace: {
-      logLevel: 'error',
-    },
-    // Target modern browsers only for better performance
-    browsersListForSwc: true,
-    // Optimize using modern JavaScript features
-    legacyBrowsers: false,
+    optimizeCss: true, // Keep this since we installed critters
   },
   // Compiler options for better optimization
   compiler: {
