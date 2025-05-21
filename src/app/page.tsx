@@ -7,7 +7,6 @@ import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ParticlesBackground } from "@/components/particles-background";
 import generateStructuredData from "./structured-data-gen";
 
 // Service cards data
@@ -582,10 +581,7 @@ export default function Home() {
           />
         </div>
         
-        {/* Interactive Particles Background */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 1 }}>
-          <ParticlesBackground />
-        </div>
+        {/* Particles background removed */}
         
         {/* Decorative Gradient Elements */}
         <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 2 }}>

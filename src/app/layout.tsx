@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import SplashCursor from "@/components/SplashCursor";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -112,6 +113,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.variable} ${poppins.variable} ${orbitron.variable} min-h-screen flex flex-col antialiased`}>
+        <SplashCursor 
+          SPLAT_RADIUS={0.25}
+          SPLAT_FORCE={8000}
+          COLOR_UPDATE_SPEED={15}
+          SHADING={true}
+          BACK_COLOR={{ r: 0.3, g: 0.1, b: 0.6 }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
           <SmoothScroll>
             <MainNav />
