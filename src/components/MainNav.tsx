@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
+// Theme toggle removed
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { BarChart3, Globe, Search, Megaphone, MonitorSmartphone, Smartphone, GraduationCap, BookOpen, Database, LineChart, PieChart, Code, Brackets, Braces, Server, Cloud, Layout, FileCode, ChevronUp, ChevronDown, Menu, X } from "lucide-react";
@@ -123,14 +123,12 @@ export default function MainNav() {
             <div className="absolute -bottom-20 right-1/4 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
           </div>
           {/* Logo */}
-          <Link href="/" className="flex items-center group relative z-10">
+          <Link href="/" className="flex items-center group relative z-10" aria-label="Veltron Sysmatic Solution - Home Page">
             <div className="relative h-10 w-24 transition-transform duration-300 group-hover:scale-105">
               <Image src="/veltron-logo.png" alt="Veltron Logo" fill priority className="object-contain" />
             </div>
             <div className="overflow-hidden">
-              
               <span className="text-4xl font-extrabold text-shine ml-2 inline-block transition-transform duration-300 group-hover:translate-x-1"></span>
-            
             </div>
           </Link>
 
@@ -146,7 +144,7 @@ export default function MainNav() {
                     pathname === "/" && "bg-primary/90 text-primary-foreground"
                   )}
                 >
-                  <Link href="/">Home</Link>
+                  <Link href="/" aria-label="Go to Veltron Home page">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               
@@ -215,8 +213,9 @@ export default function MainNav() {
                                     key={course?.href}
                                     href={course?.href || "#"}
                                     className="hover:text-primary transition-colors flex items-center text-xs py-1"
+                                    aria-label={`${name} course - View details and curriculum`}
                                   >
-                                    <div className="h-4 w-4 mr-2 text-primary/80">{course?.icon}</div>
+                                    <div className="h-4 w-4 mr-2 text-primary/80" aria-hidden="true">{course?.icon}</div>
                                     {name}
                                   </Link>
                                 )
@@ -229,7 +228,7 @@ export default function MainNav() {
 
                     <div className="mt-3 pt-2 border-t border-muted flex justify-between items-center">
                       <span className="text-xs text-muted-foreground">View all training programs</span>
-                      <Link href="/courses" className="text-xs font-medium text-primary hover:underline">
+                      <Link href="/courses" className="text-xs font-medium text-primary hover:underline" aria-label="View all available professional training courses">
                         View All →
                       </Link>
                     </div>
@@ -246,7 +245,7 @@ export default function MainNav() {
                     pathname === "/about" && "bg-primary/90 text-primary-foreground"
                   )}
                 >
-                  <Link href="/about">About</Link>
+                  <Link href="/about" aria-label="About Veltron Sysmatic Solution">About</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -259,7 +258,7 @@ export default function MainNav() {
                     pathname === "/contact" && "bg-primary/90 text-primary-foreground"
                   )}
                 >
-                  <Link href="/contact">Contact</Link>
+                  <Link href="/contact" aria-label="Contact Veltron Sysmatic Solution">Contact</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -267,7 +266,6 @@ export default function MainNav() {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
-            <ThemeToggle />
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -299,8 +297,13 @@ export default function MainNav() {
                 <MobileAccordion title="Services" icon={<Globe className="h-4 w-4 mr-2" />}>
                   <div className="pl-4 space-y-2 py-2">
                     {services.map(s => (
-                      <Link key={s.name} href={s.href} className="flex items-center py-1 text-sm hover:text-primary transition-colors">
-                        <div className="h-5 w-5 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2 shrink-0">
+                      <Link 
+                        key={s.name} 
+                        href={s.href} 
+                        className="flex items-center py-1 text-sm hover:text-primary transition-colors"
+                        aria-label={`${s.name} - ${s.description}`}
+                      >
+                        <div className="h-5 w-5 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2 shrink-0" aria-hidden="true">
                           {s.icon}
                         </div>
                         {s.name}
@@ -322,8 +325,13 @@ export default function MainNav() {
                           {names.map(name => {
                             const course = courses.find(c => c.name === name);
                             return course && (
-                              <Link key={name} href={course.href} className="flex items-center text-xs hover:text-primary transition-colors py-0.5">
-                                <div className="h-3 w-3 text-primary/70 mr-2">{course.icon}</div>
+                              <Link 
+                                key={name} 
+                                href={course.href} 
+                                className="flex items-center text-xs hover:text-primary transition-colors py-0.5"
+                                aria-label={`${name} training course - View details`}
+                              >
+                                <div className="h-3 w-3 text-primary/70 mr-2" aria-hidden="true">{course.icon}</div>
                                 {name}
                               </Link>
                             );
@@ -337,7 +345,7 @@ export default function MainNav() {
                 <MobileNavItem href="/contact" active={pathname === "/contact"}>Contact</MobileNavItem>
                 <div className="pt-4 mt-4 border-t border-white/10">
                   <Button asChild className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary text-white font-medium py-6 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
-                    <Link href="/contact">Get Started</Link>
+                    <Link href="/contact" aria-label="Contact Veltron to get started with our services">Get Started</Link>
                   </Button>
                 </div>
               </div>

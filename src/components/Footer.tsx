@@ -92,13 +92,13 @@ export default function Footer() {
         >
           <h3 className="font-medium text-lg">Services</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link href="/services/data-analytics" className="hover:text-primary">Data Analytics</Link></li>
-            <li><Link href="/services/web-development" className="hover:text-primary">Web Development</Link></li>
-            <li><Link href="/services/web-application" className="hover:text-primary">Web Application</Link></li>
-            <li><Link href="/services/seo-services" className="hover:text-primary">SEO Services</Link></li>
-            <li><Link href="/services/digital-marketing" className="hover:text-primary">Digital Marketing</Link></li>
-            <li><Link href="/services/mobile-app-development" className="hover:text-primary">Mobile App Development</Link></li>
-            <li><Link href="/services/corporate-training" className="hover:text-primary">Corporate Training</Link></li>
+            <li><Link href="/services/data-analytics" className="hover:text-primary" aria-label="Explore our Data Analytics services">Data Analytics</Link></li>
+            <li><Link href="/services/web-development" className="hover:text-primary" aria-label="Learn about our Web Development services">Web Development</Link></li>
+            <li><Link href="/services/web-application" className="hover:text-primary" aria-label="View our Web Application development offerings">Web Application</Link></li>
+            <li><Link href="/services/seo-services" className="hover:text-primary" aria-label="Discover our SEO Services">SEO Services</Link></li>
+            <li><Link href="/services/digital-marketing" className="hover:text-primary" aria-label="Learn about our Digital Marketing services">Digital Marketing</Link></li>
+            <li><Link href="/services/mobile-app-development" className="hover:text-primary" aria-label="Explore our Mobile App Development services">Mobile App Development</Link></li>
+            <li><Link href="/services/corporate-training" className="hover:text-primary" aria-label="View our Corporate Training programs">Corporate Training</Link></li>
           </ul>
         </motion.div>
 
@@ -111,14 +111,14 @@ export default function Footer() {
         >
           <h3 className="font-medium text-lg">Training</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link href="/courses#data-analytics" className="hover:text-primary">Data Analytics</Link></li>
-            <li><Link href="/courses#tableau" className="hover:text-primary">Tableau</Link></li>
-            <li><Link href="/courses#power-bi" className="hover:text-primary">Power BI</Link></li>
-            <li><Link href="/courses#sql" className="hover:text-primary">SQL</Link></li>
-            <li><Link href="/courses#python" className="hover:text-primary">Python</Link></li>
-            <li><Link href="/courses#java-fullstack" className="hover:text-primary">Java Fullstack</Link></li>
-            <li><Link href="/courses#dotnet" className="hover:text-primary">.NET Complete</Link></li>
-            <li><Link href="/courses#salesforce" className="hover:text-primary">Salesforce</Link></li>
+            <li><Link href="/courses#data-analytics" className="hover:text-primary" aria-label="Enroll in Data Analytics training course">Data Analytics</Link></li>
+            <li><Link href="/courses#tableau" className="hover:text-primary" aria-label="Learn about our Tableau training program">Tableau</Link></li>
+            <li><Link href="/courses#power-bi" className="hover:text-primary" aria-label="Discover our Power BI training course">Power BI</Link></li>
+            <li><Link href="/courses#sql" className="hover:text-primary" aria-label="View details about our SQL training program">SQL</Link></li>
+            <li><Link href="/courses#python" className="hover:text-primary" aria-label="Learn about our Python programming course">Python</Link></li>
+            <li><Link href="/courses#java-fullstack" className="hover:text-primary" aria-label="Explore our Java Fullstack development program">Java Fullstack</Link></li>
+            <li><Link href="/courses#dotnet" className="hover:text-primary" aria-label="View our comprehensive .NET development course">.NET Complete</Link></li>
+            <li><Link href="/courses#salesforce" className="hover:text-primary" aria-label="Learn about our Salesforce training program">Salesforce</Link></li>
           </ul>
         </motion.div>
 
@@ -144,7 +144,7 @@ export default function Footer() {
           </ul>
 
           <Button asChild className="w-full bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg transition-all duration-300">
-            <Link href="/contact">Contact Us →</Link>
+            <Link href="/contact" aria-label="Contact Veltron for services or training inquiries">Contact Us →</Link>
           </Button>
         </motion.div>
       </div>

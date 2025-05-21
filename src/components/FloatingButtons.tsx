@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Phone, Moon, Sun } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { createPortal } from "react-dom";
-import { useTheme } from "next-themes";
 
 // Fixed Floating Buttons that stick to the viewport
 export default function FloatingButtons() {
@@ -15,8 +14,8 @@ export default function FloatingButtons() {
   const [isHovering, setIsHovering] = useState(false);
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
-  const { theme } = useTheme();
-  const isDarkMode = theme === "dark";
+  // Always dark mode
+  const isDarkMode = true;
 
   // Setup client-side detection and portal container
   useEffect(() => {
@@ -73,7 +72,7 @@ export default function FloatingButtons() {
     if (!isMounted) return;
 
     // Initial entrance animation
-    gsap.fromTo(
+    const entranceAnim = gsap.fromTo(
       ".floating-button",
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.5 }
@@ -90,9 +89,10 @@ export default function FloatingButtons() {
     });
 
     // Setup floating motion
+    const floatingAnims: gsap.core.Tween[] = [];
     const buttons = document.querySelectorAll('.floating-button');
     buttons.forEach((button, index) => {
-      gsap.to(button, {
+      const tween = gsap.to(button, {
         y: "random(-8, 8)",
         x: "random(-3, 3)",
         rotation: "random(-3, 3)",
@@ -101,9 +101,14 @@ export default function FloatingButtons() {
         repeat: -1,
         yoyo: true
       });
+      floatingAnims.push(tween);
     });
 
-    return () => timeline.kill();
+    // Proper cleanup function
+    return () => {
+      timeline.kill();
+      floatingAnims.forEach(tween => tween.kill());
+    };
   }, [isMounted]);
 
   // Early return if not mounted or no portal container
@@ -122,7 +127,7 @@ export default function FloatingButtons() {
         <AnimatePresence>
           {(isHovering || isClientMobile) && (
             <motion.div 
-              className={`absolute right-16 top-1 ${isDarkMode ? 'bg-[#128C7E] bg-opacity-90' : 'bg-[#25D366]'} text-white px-3 py-1 rounded-lg shadow-lg`}
+              className="absolute right-16 top-1 bg-[#128C7E] bg-opacity-90 text-white px-3 py-1 rounded-lg shadow-lg"
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
@@ -142,13 +147,13 @@ export default function FloatingButtons() {
           whileTap={{ scale: 0.95 }}
         >
           {/* Pulse effect background */}
-          <div className={`absolute inset-0 ${isDarkMode ? 'bg-[#128C7E]' : 'bg-[#25D366]'} rounded-full pulse-effect opacity-70`}></div>
+          <div className="absolute inset-0 bg-[#128C7E] rounded-full pulse-effect opacity-70"></div>
           
           <a 
             href="https://wa.me/919345111211" 
             target="_blank" 
             rel="noopener noreferrer"
-            className={`floating-button veltron-floating-button rounded-full ${isDarkMode ? 'bg-gradient-to-br from-[#128C7E]/90 to-[#075E54]/90' : 'bg-gradient-to-br from-[#25D366] to-[#128C7E]'} text-white flex items-center justify-center shadow-lg`}
+            className="floating-button veltron-floating-button rounded-full bg-gradient-to-br from-[#128C7E]/90 to-[#075E54]/90 text-white flex items-center justify-center shadow-lg"
             aria-label="Chat on WhatsApp"
           >
             <MessageCircle className="w-6 h-6 fill-white" />
@@ -163,7 +168,7 @@ export default function FloatingButtons() {
         <AnimatePresence>
           {(isHovering || isClientMobile) && (
             <motion.div 
-              className={`absolute right-16 top-1 ${isDarkMode ? 'bg-primary/70' : 'bg-primary'} text-white px-3 py-1 rounded-lg shadow-lg`}
+              className="absolute right-16 top-1 bg-primary/70 text-white px-3 py-1 rounded-lg shadow-lg"
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
@@ -183,11 +188,11 @@ export default function FloatingButtons() {
           whileTap={{ scale: 0.95 }}
         >
           {/* Pulse effect background */}
-          <div className={`absolute inset-0 ${isDarkMode ? 'bg-primary/70' : 'bg-primary'} rounded-full pulse-effect opacity-70`}></div>
+          <div className="absolute inset-0 bg-primary/70 rounded-full pulse-effect opacity-70"></div>
           
           <a 
             href="tel:+919345111211" 
-            className={`floating-button veltron-floating-button rounded-full ${isDarkMode ? 'bg-gradient-to-br from-primary/80 to-primary/60' : 'bg-gradient-to-br from-primary to-primary/80'} text-white flex items-center justify-center shadow-lg`}
+            className="floating-button veltron-floating-button rounded-full bg-gradient-to-br from-primary/80 to-primary/60 text-white flex items-center justify-center shadow-lg"
             aria-label="Call Us"
           >
             <Phone className="w-6 h-6" />

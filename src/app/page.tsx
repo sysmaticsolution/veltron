@@ -628,20 +628,24 @@ export default function Home() {
           </div>
           
           <div className="mt-20 flex justify-center">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              className="animate-bounce w-6 h-6 text-muted-foreground"
-            >
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
+            <Link href="#services" aria-label="Scroll down to services section" className="focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-2">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="animate-bounce w-6 h-6 text-muted-foreground"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+              <span className="sr-only">Scroll down to explore our services</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -710,9 +714,9 @@ export default function Home() {
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                     <p className="text-muted-foreground mb-4">{service.description}</p>
-                    <Link href={service.link} className="text-primary hover:underline mt-auto flex items-center">
-                      Learn More
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
+                    <Link href={service.link} className="text-primary hover:underline mt-auto flex items-center" aria-label={`Learn more about ${service.title} services`}>
+                      Learn more about {service.title}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true">
                         <path d="M5 12h14"></path>
                         <path d="m12 5 7 7-7 7"></path>
                       </svg>
@@ -762,16 +766,16 @@ export default function Home() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {courseCategories.map((category, index) => (
-              <Link key={index} href={category.link}>
+              <Link key={index} href={category.link} aria-label={`Explore ${category.title} courses - ${category.count} available`}>
                 <Card className="course-card h-full overflow-hidden border border-white/20 bg-background shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-300 cursor-pointer hover:scale-105">
                   <CardContent className="p-6">
-                    <div className="mb-4 p-2 rounded-full bg-primary/10 w-14 h-14 flex items-center justify-center">
+                    <div className="mb-4 p-2 rounded-full bg-primary/10 w-14 h-14 flex items-center justify-center" aria-hidden="true">
                       {category.icon}
                     </div>
                     <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">{category.count} Courses</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary" aria-hidden="true">
                         <path d="M5 12h14"></path>
                         <path d="m12 5 7 7-7 7"></path>
                       </svg>
@@ -784,7 +788,7 @@ export default function Home() {
           
           <div className="mt-12 text-center">
             <Button asChild>
-              <Link href="/courses">Explore All Courses</Link>
+              <Link href="/courses" aria-label="View our complete catalog of professional training courses">Explore All Courses</Link>
             </Button>
           </div>
         </div>
@@ -802,10 +806,10 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" asChild>
-              <Link href="/contact">Get in Touch</Link>
+              <Link href="/contact" aria-label="Contact Veltron for technology solutions or training inquiries">Get in Touch</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/about">Learn About Us</Link>
+              <Link href="/about" aria-label="Learn more about Veltron Sysmatic Solution and our services">Learn About Us</Link>
             </Button>
           </div>
         </div>
