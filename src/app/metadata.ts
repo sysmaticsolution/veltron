@@ -9,11 +9,11 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   keywords: [
-    "Data Analytics Services Chennai", "Web Development Company Chennai", "SEO Services Chennai", 
-    "Digital Marketing Agency Chennai", "Web Application Development Tamil Nadu", 
-    "Mobile App Development Chennai", "Corporate IT Training Chennai", 
-    "Professional Skill Development Kolathur", "Technology Solutions Provider Chennai", 
-    "Career Advancement Courses Chennai", "Business Technology Solutions Tamil Nadu",
+    "Data Analytics Services in Chennai", "Web Development Company in Chennai", "SEO Services in Chennai", 
+    "Digital Marketing Agency in Chennai", "Web Application Development in Tamil Nadu", 
+    "Mobile App Development in Chennai", "Corporate IT Training in Chennai", 
+    "Professional Skill Development in Kolathur", "Technology Solutions Provider in Chennai", 
+    "Career Advancement Courses Chennai", "Business Technology Solutions in Tamil Nadu",
     "IT Training Institute Kolathur", "Chennai Tech Company", "Software Services Chennai"
   ],
   openGraph: {
