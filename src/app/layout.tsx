@@ -27,6 +27,17 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: [{ url: '/veltron-logo.png' }],
+    shortcut: [{ url: '/veltron-logo.png' }],
+    apple: [{ url: '/veltron-logo.png' }],
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/veltron-logo.png',
+      }
+    ],
+  },
   title: "Veltron Sysmatic Solution - Leading Technology Solutions & Professional Training in Chennai",
   description: "Veltron offers comprehensive technology solutions and professional training in Chennai, Tamil Nadu. Specializing in Data Analytics, Web Development, SEO Services, Digital Marketing, Web Applications, Mobile App Development, Corporate Training and Skill Development Courses.",
   keywords: [
