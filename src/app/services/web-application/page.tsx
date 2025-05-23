@@ -157,7 +157,7 @@ export default function WebApplicationPage() {
           <div className="header-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="text-white">
               <h1 className="text-7xl sm:text-6xl font-bold mb-6 drop-shadow-md">
-                Enterprise <span className="text-primary">Web Application</span> Development
+                Enterprise Web Application Development
               </h1>
               <p className="text-xl text-zinc-200 mb-8 drop-shadow-sm">
                 Custom web application solutions designed to streamline business operations, enhance user experiences, and drive digital transformation.

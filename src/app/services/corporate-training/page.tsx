@@ -144,7 +144,7 @@ export default function CorporateTrainingPage() {
           <div className="header-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6">
-                Corporate <span className="text-primary">Training</span> Programs
+                Corporate Training Programs
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
                 Customized training solutions to upskill your workforce, enhance productivity, and drive innovation in your organization.

@@ -42,12 +42,12 @@ export const metadata: Metadata = {
   title: "Veltron Sysmatic Solution - Leading Technology Solutions & Professional Training in Chennai",
   description: "Veltron offers comprehensive technology solutions and professional training in Chennai, Tamil Nadu. Specializing in Data Analytics, Web Development, SEO Services, Digital Marketing, Web Applications, Mobile App Development, Corporate Training and Skill Development Courses.",
   keywords: [
-    "Data Analytics Chennai", "Web Development Chennai", "SEO Services Chennai", "Digital Marketing Chennai", 
-    "Web Application Development Chennai", "Mobile App Development Tamil Nadu", "Corporate Training Chennai", 
-    "Skill Development Courses Kolathur", "IT Solutions Chennai", "Professional Training Chennai", 
-    "Business Technology Solutions Tamil Nadu", "Career Development Chennai", "Technology Consulting Chennai", 
-    "Software Development Chennai", "IT Training Kolathur", "Data Science Courses Chennai", "Web Design Chennai", 
-    "UI/UX Design Tamil Nadu", "Cloud Solutions Chennai", "DevOps Training Chennai"
+    "Data Analytics in Chennai", "Web Development in Chennai", "SEO Services in Chennai", "Digital Marketing in Chennai", 
+    "Web Application Development in Chennai", "Mobile App Development in Tamil Nadu", "Corporate Training in Chennai", 
+    "Skill Development Courses in Kolathur", "IT Solutions in Chennai", "Professional Training in Chennai", 
+    "Business Technology Solutions in Tamil Nadu", "Career Development in Chennai", "Technology Consulting in Chennai", 
+    "Software Development in Chennai", "IT Training in Kolathur", "Data Science Courses in Chennai", "Web Design in Chennai", 
+    "UI/UX Design in Tamil Nadu", "Cloud Solutions in Chennai", "DevOps Training in Chennai"
   ],
   authors: [{ name: "Veltron Sysmatic Solution Pvt Ltd - Chennai" }],
   creator: "Veltron Sysmatic Solution - Chennai",

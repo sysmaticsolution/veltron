@@ -314,7 +314,7 @@ export default function MobileAppDevelopmentPage() {
                 <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium">App Development</span>
               </div>
               <h1 className="header-title text-7xl sm:text-6xl font-bold mb-6 text-white leading-tight">
-                Transform Ideas Into <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Powerful Apps</span>
+                Transform Ideas Into Powerful Apps
               </h1>
               <p className="header-description text-xl text-white/90 mb-8">
                 Build engaging, high-performance mobile applications that drive user engagement and business growth across iOS and Android platforms.
