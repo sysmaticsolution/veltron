@@ -220,7 +220,24 @@ export default function MobileCourseView({
                   healthcare, and manufacturing.
                 </p>
                 
-                <Button size="lg" className="mt-4 w-full">
+                <Button 
+                  size="lg" 
+                  className="mt-4 w-full"
+                  onClick={() => {
+                    // Set the form course value to the currently selected course
+                    setFormState(prev => ({ ...prev, course: courses[activeSection].title }));
+                    
+                    // Scroll to the form section with a smooth animation
+                    const formSection = document.querySelector('.enquiry-form-section');
+                    if (formSection) {
+                      const formPosition = formSection.getBoundingClientRect().top + window.scrollY;
+                      window.scrollTo({
+                        top: formPosition - 80, // Offset for header
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                >
                   Enroll Now
                 </Button>
               </CardContent>

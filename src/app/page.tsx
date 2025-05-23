@@ -594,7 +594,7 @@ export default function Home() {
             
               Veltron Sysmatic Solution 
           </h1>
-          <p className="hero-text text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="hero-text text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-8">
             Empowering Businesses With Innovation & Strategic Empowerment
           </p>
           <p className="hero-text text-primary text-lg md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-5">

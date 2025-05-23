@@ -883,7 +883,7 @@ $ npm start
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-white">
-                Web <span className="text-primary">Development</span> Services
+                Web Development Services
               </h1>
               <p className="text-xl text-white/80 mb-8">
                 Custom, responsive, and high-performance web solutions designed to elevate your digital presence and drive business growth.

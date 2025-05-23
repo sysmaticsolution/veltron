@@ -125,7 +125,8 @@ export default function FloatingButtons() {
       {/* WhatsApp Button and Label */}
       <div className="relative">
         <AnimatePresence>
-          {(isHovering || isClientMobile) && (
+          {/* Only show label on desktop when hovering */}
+          {(isHovering && !isClientMobile) && (
             <motion.div 
               className="absolute right-16 top-1 bg-[#128C7E] bg-opacity-90 text-white px-3 py-1 rounded-lg shadow-lg"
               initial={{ opacity: 0, x: 10 }}
@@ -166,7 +167,8 @@ export default function FloatingButtons() {
       {/* Call Button and Label */}
       <div className="relative">
         <AnimatePresence>
-          {(isHovering || isClientMobile) && (
+          {/* Only show label on desktop when hovering */}
+          {(isHovering && !isClientMobile) && (
             <motion.div 
               className="absolute right-16 top-1 bg-primary/70 text-white px-3 py-1 rounded-lg shadow-lg"
               initial={{ opacity: 0, x: 10 }}

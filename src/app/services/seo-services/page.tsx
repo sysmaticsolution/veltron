@@ -207,7 +207,7 @@ export default function SEOServicesPage() {
           <div className="header-content grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-7xl sm:text-6xl font-bold mb-6 text-white">
-                SEO Services
+                <span className="text-primary">SEO</span> Services
               </h1>
               <p className="text-xl text-white/90 mb-8">
                 Elevate your online presence with our comprehensive search engine optimization strategies that drive targeted traffic and increase your conversions.

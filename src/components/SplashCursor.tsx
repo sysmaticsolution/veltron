@@ -1557,7 +1557,7 @@ export default function SplashCursor({
         position: "fixed",
         top: 0,
         left: 0,
-        zIndex: 1,
+        zIndex: 50, // Value between background images (z-10) and content (z-20)
         pointerEvents: "none",
         width: "100%",
         height: "100%",

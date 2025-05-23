@@ -71,21 +71,21 @@ const services = [
 ];
 
 const courses = [
-  { name: "Data Analytics", href: "/courses#data-analytics", icon: <BarChart3 className="h-4 w-4" /> },
-  { name: "Tableau", href: "/courses#tableau", icon: <PieChart className="h-4 w-4" /> },
-  { name: "Power BI", href: "/courses#power-bi", icon: <LineChart className="h-4 w-4" /> },
-  { name: "SQL", href: "/courses#sql", icon: <Database className="h-4 w-4" /> },
-  { name: "Python", href: "/courses#python", icon: <Code className="h-4 w-4" /> },
-  { name: "React", href: "/courses#react", icon: <Brackets className="h-4 w-4" /> },
-  { name: "Angular", href: "/courses#angular", icon: <Braces className="h-4 w-4" /> },
-  { name: "Java Fullstack", href: "/courses#java-fullstack", icon: <FileCode className="h-4 w-4" /> },
-  { name: "Python Fullstack", href: "/courses#python-fullstack", icon: <Code className="h-4 w-4" /> },
-  { name: ".NET - Complete", href: "/courses#dotnet", icon: <Braces className="h-4 w-4" /> },
-  { name: "DevOps", href: "/courses#devops", icon: <Server className="h-4 w-4" /> },
-  { name: "AWS", href: "/courses#aws", icon: <Cloud className="h-4 w-4" /> },
-  { name: "Azure", href: "/courses#azure", icon: <Cloud className="h-4 w-4" /> },
-  { name: "UI UX - Complete", href: "/courses#ui-ux", icon: <Layout className="h-4 w-4" /> },
-  { name: "Salesforce - Complete", href: "/courses#salesforce", icon: <Database className="h-4 w-4" /> },
+  { name: "Data Analytics", href: "/courses#data-analytics", icon: <BarChart3 className="h-6 w-6" /> },
+  { name: "Tableau", href: "/courses#tableau", icon: <PieChart className="h-6 w-6" /> },
+  { name: "Power BI", href: "/courses#power-bi", icon: <LineChart className="h-6 w-6" /> },
+  { name: "SQL", href: "/courses#sql", icon: <Database className="h-6 w-6" /> },
+  { name: "Python", href: "/courses#python", icon: <Code className="h-6 w-6" /> },
+  { name: "React", href: "/courses#react", icon: <Brackets className="h-6 w-6" /> },
+  { name: "Angular", href: "/courses#angular", icon: <Braces className="h-6 w-6" /> },
+  { name: "Java Fullstack", href: "/courses#java-fullstack", icon: <FileCode className="h-6 w-6" /> },
+  { name: "Python Fullstack", href: "/courses#python-fullstack", icon: <Code className="h-6 w-6" /> },
+  { name: ".NET - Complete", href: "/courses#dotnet", icon: <Braces className="h-6 w-6" /> },
+  { name: "DevOps", href: "/courses#devops", icon: <Server className="h-6 w-6" /> },
+  { name: "AWS", href: "/courses#aws", icon: <Cloud className="h-6 w-6" /> },
+  { name: "Azure", href: "/courses#azure", icon: <Cloud className="h-6 w-6" /> },
+  { name: "UI UX - Complete", href: "/courses#ui-ux", icon: <Layout className="h-6 w-6" /> },
+  { name: "Salesforce - Complete", href: "/courses#salesforce", icon: <Database className="h-6 w-6" /> },
 ];
 
 // Icons for course categories
@@ -191,27 +191,41 @@ export default function MainNav() {
               {/* Courses Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger 
-                  className="rounded-full bg-background/10 hover:bg-background/30 hover:text-primary data-[state=open]:bg-primary/90 data-[state=open]:text-primary-foreground font-medium"
+                  className="rounded-full bg-background/10 hover:bg-background/30 hover:text-primary data-[state=open]:bg-primary/90 data-[state=open]:text-primary-foreground font-medium text-base"
                 >
                   Courses
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 overflow-hidden z-50 w-screen max-w-[94vw] sm:max-w-xl md:max-w-lg lg:max-w-xl xl:max-w-xl">
+                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 overflow-hidden z-50 w-screen max-w-[94vw] sm:max-w-xl md:max-w-lg">
                   <div className="p-4">
-                    <div className="mb-3">
-                      <h3 className="text-base font-semibold text-primary/80">Professional Training</h3>
-                      <p className="text-xs text-muted-foreground">Boost your career with our courses</p>
+                    <div className="flex justify-between items-center mb-3">
+                      <div>
+                        <h3 className="text-base font-semibold text-primary/80">Professional Training</h3>
+                        <p className="text-xs text-muted-foreground">Boost your career with our courses</p>
+                      </div>
+                      <Link 
+                        href="/courses" 
+                        className="text-sm font-medium text-primary hover:underline hover:text-primary/80 flex items-center bg-primary/10 rounded-full px-4 py-1.5" 
+                        aria-label="View all available professional training courses"
+                        onClick={handleItemClick}
+                      >
+                        View All
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1 h-4 w-4">
+                          <path d="M5 12h14" />
+                          <path d="m12 5 7 7-7 7" />
+                        </svg>
+                      </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2 max-h-[60vh] overflow-y-auto scrollbar-thin">
+                    <div className="grid grid-cols-1 gap-4 max-h-[60vh] overflow-y-auto scrollbar-thin">
                       {Object.entries(courseCategories).map(([category, names]) => (
-                        <div key={category}>
-                          <div className="text-xs font-semibold mb-2 border-b border-muted pb-1 flex items-center">
-                            <div className="h-5 w-5 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2">
+                        <div key={category} className="bg-white/5 rounded-lg p-3 mb-2">
+                          <div className="text-sm font-semibold mb-3 border-b border-primary/30 pb-2 flex items-center">
+                            <div className="h-6 w-6 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full flex items-center justify-center text-primary mr-2">
                               {categoryIcons[category]}
                             </div>
                             {category}
                           </div>
-                          <div className="space-y-1.5">
+                          <div className="space-y-2">
                             {names.map(name => {
                               const course = courses.find(c => c.name === name);
                               return (
@@ -219,12 +233,12 @@ export default function MainNav() {
                                   <Link
                                     key={course?.href}
                                     href={course?.href || "#"}
-                                    className="hover:text-primary hover:bg-accent/30 transition-all duration-300 flex items-center text-xs py-1 px-2 rounded-md hover:translate-x-1 group"
+                                    className="hover:text-primary hover:bg-primary/20 transition-all duration-300 flex items-center text-sm py-2 px-3 rounded-md hover:translate-x-1 group"
                                     aria-label={`${name} course - View details and curriculum`}
                                     onClick={handleItemClick}
                                   >
-                                    <div className="h-4 w-4 mr-2 text-primary/80 transition-all duration-300 group-hover:text-primary group-hover:scale-110" aria-hidden="true">{course?.icon}</div>
-                                    {name}
+                                    <div className="h-6 w-6 mr-2 text-primary/80 transition-all duration-300 group-hover:text-primary group-hover:scale-110" aria-hidden="true">{course?.icon}</div>
+                                    <span className="font-medium">{name}</span>
                                   </Link>
                                 )
                               );
@@ -234,17 +248,7 @@ export default function MainNav() {
                       ))}
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-muted flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">View all training programs</span>
-                      <Link 
-                        href="/courses" 
-                        className="text-xs font-medium text-primary hover:underline" 
-                        aria-label="View all available professional training courses"
-                        onClick={handleItemClick}
-                      >
-                        View All →
-                      </Link>
-                    </div>
+
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
