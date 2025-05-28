@@ -91,7 +91,7 @@ export default function Footer() {
           className="space-y-4"
         >
           <h3 className="font-medium text-lg">Services</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
+          <ul className="space-y-2 text-sm text-muted-foreground pl-2">
             <li><Link href="/services/data-analytics" className="hover:text-primary" aria-label="Explore our Data Analytics services">Data Analytics</Link></li>
             <li><Link href="/services/web-development" className="hover:text-primary" aria-label="Learn about our Web Development services">Web Development</Link></li>
             <li><Link href="/services/web-application" className="hover:text-primary" aria-label="View our Web Application development offerings">Web Application</Link></li>
@@ -110,7 +110,7 @@ export default function Footer() {
           className="space-y-4"
         >
           <h3 className="font-medium text-lg">Training</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
+          <ul className="space-y-2 text-sm text-muted-foreground pl-2">
             <li><Link href="/courses#data-analytics" className="hover:text-primary" aria-label="Enroll in Data Analytics training course">Data Analytics</Link></li>
             <li><Link href="/courses#tableau" className="hover:text-primary" aria-label="Learn about our Tableau training program">Tableau</Link></li>
             <li><Link href="/courses#power-bi" className="hover:text-primary" aria-label="Discover our Power BI training course">Power BI</Link></li>
@@ -130,7 +130,7 @@ export default function Footer() {
           className="space-y-4"
         >
           <h3 className="font-medium text-lg">Contact Us</h3>
-          <ul className="space-y-3 text-sm text-muted-foreground">
+          <ul className="space-y-3 text-sm text-muted-foreground pl-2">
             <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 400 }} className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-primary" /> +91 93451 11211
             </motion.li>
@@ -157,7 +157,7 @@ export default function Footer() {
         className="container mt-8 pt-8 border-t border-white/10"
       >
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-muted-foreground px-2 md:px-0">
             © {new Date().getFullYear()} Veltron Sysmatic Solution Pvt Ltd. All rights reserved.
           </div>
           <div className="flex items-center space-x-6">

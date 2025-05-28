@@ -92,7 +92,7 @@ export default function MobileCourseView({
   return (
     <>
       {/* Mobile Course Selector (visible only on small screens) */}
-      <section className="py-4 sm:py-6 bg-gradient-to-r from-muted/20 to-muted/10 md:hidden sticky top-0 z-10 shadow-md">
+      <section className="py-4 sm:py-6 bg-muted/10 md:hidden sticky top-0 z-10 shadow-md">
         <div className="container mx-auto px-4">
           <h2 className="text-xl font-semibold mb-4 text-primary">Our Courses</h2>
           <div className="relative">

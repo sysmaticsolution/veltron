@@ -780,6 +780,38 @@ html {
   100% { transform: translateX(-5%); opacity: 0.5; }
 }
 
+/* Dropdown menu scroll containment styles */
+.courses-dropdown-content,
+.services-dropdown-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+}
+
+/* Custom scrollbar for Webkit browsers */
+.courses-dropdown-content::-webkit-scrollbar,
+.services-dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.courses-dropdown-content::-webkit-scrollbar-track,
+.services-dropdown-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.courses-dropdown-content::-webkit-scrollbar-thumb,
+.services-dropdown-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  border: 2px solid transparent;
+}
+
+/* Prevent body scroll when dropdown is open */
+body.dropdown-open {
+  overflow: hidden;
+}
+
 .animate-webapp-item {
   animation: webapp-item 2.5s ease-in-out infinite;
 }

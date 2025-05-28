@@ -108,6 +108,26 @@ export default function MainNav() {
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   
+  // Enhanced function to prevent scroll propagation completely
+  const preventScrollPropagation = (e: React.WheelEvent) => {
+    e.stopPropagation();
+    
+    // Get the current target element
+    const element = e.currentTarget as HTMLElement;
+    const { scrollTop, scrollHeight, clientHeight } = element;
+    
+    // Check if scroll reached the top or bottom boundary
+    const isScrollingUp = e.deltaY < 0;
+    const isScrollingDown = e.deltaY > 0;
+    const isAtTop = scrollTop === 0;
+    const isAtBottom = scrollHeight - scrollTop === clientHeight;
+    
+    // Prevent default behavior only if trying to scroll beyond boundaries
+    if ((isScrollingUp && isAtTop) || (isScrollingDown && isAtBottom)) {
+      e.preventDefault();
+    }
+  };
+
   // Function to handle menu item click and close dropdown
   const handleItemClick = () => {
     setActiveItem(null);
@@ -161,8 +181,17 @@ export default function MainNav() {
                 >
                   Services
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 overflow-hidden z-50 w-screen max-w-[94vw] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-4 max-h-[60vh] overflow-y-auto scrollbar-thin">
+                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 z-50 w-screen max-w-[94vw] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl overflow-hidden">
+                  <div 
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-4 services-dropdown-content" 
+                    style={{ 
+                      maxHeight: 'calc(70vh - 20px)', 
+                      overflowY: 'auto', 
+                      scrollbarWidth: 'thin',
+                      overscrollBehavior: 'contain'
+                    }}
+                    onWheel={preventScrollPropagation}
+                  >
                     <div className="col-span-full mb-2">
                       <h3 className="text-base font-semibold text-primary/80">Our Services</h3>
                       <p className="text-xs text-muted-foreground">Comprehensive technology solutions</p>
@@ -195,8 +224,17 @@ export default function MainNav() {
                 >
                   Courses
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 overflow-hidden z-50 w-screen max-w-[94vw] sm:max-w-xl md:max-w-lg">
-                  <div className="p-4">
+                <NavigationMenuContent className="rounded-xl border border-white/10 bg-background/90 backdrop-blur-xl shadow-xl shadow-black/5 z-50 w-screen max-w-[94vw] sm:max-w-xl md:max-w-lg overflow-hidden">
+                  <div 
+                    className="p-4 courses-dropdown-content" 
+                    style={{ 
+                      maxHeight: 'calc(80vh - 20px)', 
+                      overflowY: 'auto', 
+                      scrollbarWidth: 'thin',
+                      overscrollBehavior: 'contain' 
+                    }}
+                    onWheel={preventScrollPropagation}
+                  >
                     <div className="flex justify-between items-center mb-3">
                       <div>
                         <h3 className="text-base font-semibold text-primary/80">Professional Training</h3>
@@ -216,7 +254,7 @@ export default function MainNav() {
                       </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4 max-h-[60vh] overflow-y-auto scrollbar-thin">
+                    <div className="grid grid-cols-1 gap-4">
                       {Object.entries(courseCategories).map(([category, names]) => (
                         <div key={category} className="bg-white/5 rounded-lg p-3 mb-2">
                           <div className="text-sm font-semibold mb-3 border-b border-primary/30 pb-2 flex items-center">
@@ -341,8 +379,8 @@ export default function MainNav() {
                   <div className="pl-4 space-y-2 py-2">
                     {Object.entries(courseCategories).map(([cat, names]) => (
                       <div key={cat} className="mb-2">
-                        <div className="text-xs font-semibold mb-1 flex items-center">
-                          <div className="h-4 w-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2">
+                        <div className="text-sm font-semibold mb-2 flex items-center">
+                          <div className="h-5 w-5 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2">
                             {categoryIcons[cat]}
                           </div>
                           {cat}
@@ -354,11 +392,11 @@ export default function MainNav() {
                               <Link 
                                 key={name} 
                                 href={course.href} 
-                                className="flex items-center text-xs hover:text-primary hover:bg-accent/30 transition-all duration-300 py-0.5 px-2 rounded-md hover:translate-x-1 group"
+                                className="flex items-center text-sm hover:text-primary hover:bg-accent/30 transition-all duration-300 py-1 px-2 rounded-md hover:translate-x-1 group"
                                 aria-label={`${name} training course - View details`}
                                 onClick={() => setMobileMenuOpen(false)}
                               >
-                                <div className="h-3 w-3 text-primary/70 mr-2 transition-all duration-300 group-hover:text-primary group-hover:scale-110" aria-hidden="true">{course.icon}</div>
+                                <div className="h-4 w-4 text-primary/70 mr-2 transition-all duration-300 group-hover:text-primary group-hover:scale-110" aria-hidden="true">{course.icon}</div>
                                 {name}
                               </Link>
                             );
