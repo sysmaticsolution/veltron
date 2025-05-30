@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -15,19 +15,48 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
   const smoothContent = useRef<HTMLDivElement>(null);
   const pathname = usePathname(); // Track route changes
   const smootherRef = useRef<any>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  // Detect mobile and iOS devices
+  useEffect(() => {
+    const checkDevice = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      
+      // Detect iOS devices
+      const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      setIsIOS(iOS);
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
   useEffect(() => {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-    // Create the smooth scroller
+    // Skip smooth scrolling on iOS devices to use native scrolling
+    if (isIOS) {
+      // Apply styles to make native iOS scrolling feel better
+      if (smoothContent.current) {
+        // Use setAttribute for non-standard properties
+        smoothContent.current.setAttribute('style', '-webkit-overflow-scrolling: touch; overflow-y: auto;');
+      }
+      return;
+    }
+
+    // Create the smooth scroller with optimized settings for different devices
     const smoother = ScrollSmoother.create({
       wrapper: smoothWrapper.current,
       content: smoothContent.current,
-      smooth: 1.5, // Adjust the smoothness (higher = smoother but slower)
-      effects: true, // Enable special effects like parallax
-      normalizeScroll: true, // Normalize scroll behavior across devices
-      ignoreMobileResize: true, // Prevent issues on mobile resize
+      smooth: isMobile ? 0.8 : 1.2, // Lower smoothness on mobile for better performance
+      effects: !isMobile, // Disable effects on mobile devices
+      normalizeScroll: !isIOS, // Don't normalize scroll on iOS devices
+      ignoreMobileResize: true
     });
     
     // Store the smoother instance in a ref
@@ -35,9 +64,11 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
     // Cleanup
     return () => {
-      smoother.kill();
+      if (smoother) {
+        smoother.kill();
+      }
     };
-  }, []);
+  }, [isMobile, isIOS]);
   
   // Effect that runs on route change to scroll to top
   useEffect(() => {

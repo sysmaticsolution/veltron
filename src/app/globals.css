@@ -347,6 +347,25 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* iOS Scrolling Optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+  overflow-x: hidden;
+  touch-action: manipulation; /* Improves touch responsiveness */
+}
+
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific fixes */
+  .smooth-content {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: none;
+  }
+}
+
 @layer base {
   * {
     border-color: hsl(var(--border));
