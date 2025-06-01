@@ -352,6 +352,17 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Ensure splash cursor doesn't appear over navigation */
+header {
+  position: relative;
+  z-index: 100 !important; /* Higher than splash cursor */
+}
+
+/* Ensure splash cursor stays below nav */
+#fluid-container {
+  z-index: 5 !important;
+}
+
 html, body {
   -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
   overflow-x: hidden;
@@ -363,6 +374,31 @@ html, body {
   .smooth-content {
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior-y: none;
+    min-height: 100vh;
+    /* Fix for black space below footer */
+    height: 100% !important;
+    position: relative !important;
+    /* Prevent content overflow */
+    overflow: hidden;
+  }
+  
+  /* Fix for about, contact, and courses pages */
+  html, body {
+    height: 100% !important;
+    min-height: 100% !important;
+    position: relative !important;
+  }
+  
+  /* Prevent overflow issues */
+  main {
+    position: relative;
+    z-index: 1;
+  }
+  
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0 !important;
   }
 }
 

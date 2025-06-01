@@ -1,1249 +1,185 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import AnimatedParticles from "@/components/AnimatedParticles";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import dynamic from "next/dynamic";
+import React from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { BarChart3, Code, GitBranch, Database, Brackets, Braces, FileCode, Server, CloudCog, NetworkIcon, Cpu, Bot, MessageSquare, ArrowRight, MoveRight, Sparkles, Star, GraduationCap, Clock, Users, MessageCircle } from "lucide-react";
 
-// Dynamically import the mobile course view component with SSR disabled
-const MobileCourseView = dynamic(() => import("@/components/courses/MobileCourseView"), {
-  ssr: false, // Disable server-side rendering to avoid hydration issues with mobile detection
-});
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Form states
-type FormState = {
-  name: string;
-  email: string;
-  phone: string;
-  course: string;
-  message: string;
+const courseCategories = {
+  "Data & Analytics": [
+    { name: "Data Analytics", href: "/courses/data-analytics", icon: <BarChart3 className="h-6 w-6" />, hasPage: true, tag: "Most Popular", description: "Transform data into actionable insights" },
+    { name: "Python", href: "/courses/python", icon: <Code className="h-6 w-6" />, hasPage: true, description: "Learn Python programming from basics to advanced" },
+    { name: "DSA Training", href: "/courses/dsa", icon: <GitBranch className="h-6 w-6" />, hasPage: true, description: "Master algorithms and ace technical interviews" },
+    { name: "Python Full Stack", href: "/courses/python-fullstack", icon: <Code className="h-6 w-6" />, hasPage: true, description: "End-to-end web development with Python" },
+  ],
+  "Web Development": [
+    { name: "Angular", href: "/courses/angular", icon: <Brackets className="h-6 w-6" />, hasPage: true, tag: "Trending", description: "Master modern frontend development" },
+    { name: "React Training", href: "/courses/react", icon: <Braces className="h-6 w-6" />, hasPage: true, description: "Build dynamic UIs with React and Redux" },
+    { name: "Java Full Stack", href: "/courses/java-fullstack", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Full stack development with Java technologies" },
+    { name: "Java + Spring Boot", href: "/courses/java-spring", icon: <Server className="h-6 w-6" />, hasPage: true, description: "Enterprise application development with Spring" },
+    { name: "DOT NET Training", href: "/courses/dotnet", icon: <Braces className="h-6 w-6" />, hasPage: true, description: "C# and .NET framework development" },
+  ],
+  "DevOps & Cloud": [
+    { name: "AWS Course", href: "/courses/aws", icon: <CloudCog className="h-6 w-6" />, hasPage: true, tag: "In Demand", description: "Master cloud computing with AWS" },
+    { name: "DevOps", href: "/courses/devops", icon: <NetworkIcon className="h-6 w-6" />, hasPage: true, description: "CI/CD pipelines and infrastructure automation" },
+    { name: "Salesforce", href: "/courses/salesforce", icon: <CloudCog className="h-6 w-6" />, hasPage: true, description: "CRM development and administration" },
+    { name: "Linux", href: "/courses/linux", icon: <Cpu className="h-6 w-6" />, hasPage: true, description: "Command line, system administration, and scripting" },
+    { name: "CCNA Course", href: "/courses/ccna", icon: <NetworkIcon className="h-6 w-6" />, hasPage: true, description: "Master Cisco networking and security" },
+  ],
+  "Testing & Automation": [
+    { name: "Java Selenium Basics", href: "/courses/java-selenium", icon: <Bot className="h-6 w-6" />, hasPage: true, description: "Web automation testing with Selenium WebDriver" },
+    { name: "Java Training", href: "/courses/java-training", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Core Java programming fundamentals" },
+    { name: "Interview Preparation", href: "/courses/interview-prep", icon: <MessageSquare className="h-6 w-6" />, hasPage: true, tag: "New", description: "Ace technical interviews across domains" },
+  ]
 };
 
-type FormStatus = "idle" | "submitting" | "success" | "error";
-
-
-// Course data
-const courses = [
-  {
-    id: "data-analytics",
-    title: "Data Analytics",
-    description: "A comprehensive 3-month professional training program covering Data Analytics, Tableau, Power BI, SQL, and Python - all essential skills bundled in one complete package for aspiring data professionals.",
-    duration: "12 Weeks (3 Months)",
-    level: "Beginner to Advanced",
-    curriculum: [
-      "Tableau for Interactive Dashboards",
-      "Power BI for Business Intelligence", 
-      "SQL for Database Management & Queries",
-      "Python for Data Analysis & Automation",
-      "Data Collection & Preprocessing",
-      "Statistical Analysis & Modeling",
-      "Advanced Visualization Techniques",
-      "Real-world Analytics Projects"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M3 3v18h18" />
-        <path d="m19 9-5 5-4-4-3 3" />
-      </svg>
-    )
-  },
-  {
-    id: "tableau",
-    title: "Tableau",
-    description: "Become proficient in Tableau, the leading data visualization platform, to create powerful, interactive dashboards and data storytelling solutions for business intelligence. This module is included in our comprehensive Data Analytics course.",
-    duration: "Part of 3-Month Data Analytics",
-    level: "Intermediate",
-    curriculum: [
-      "Tableau Desktop & Interface Study",
-      "Data Types & Connection Methods",
-      "Dimensions, Measures & Calculations",
-      "LOD Expressions & Table Calculations",
-      "Advanced Functions & Visualizations",
-      "Data Modeling (Relationships, Joins, Unions)",
-      "Dashboard Actions & Functions",
-      "Real-time Dashboard Creation"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <rect width="18" height="18" x="3" y="3" rx="2" />
-        <path d="M3 9h18" />
-        <path d="M9 21V9" />
-      </svg>
-    )
-  },
-  {
-    id: "power-bi",
-    title: "Power BI",
-    description: "Master Microsoft Power BI to transform raw data into stunning interactive visualizations and powerful business intelligence solutions. This module is included in our comprehensive Data Analytics course.",
-    duration: "Part of 3-Month Data Analytics",
-    level: "Beginner to Intermediate",
-    curriculum: [
-      "Power BI Components & Interface Study",
-      "Power Query Editor (ETL Process)",
-      "Data Modeling & Relationship Types",
-      "DAX Calculations & Functions",
-      "Advanced Visualizations & AI Visuals",
-      "Cross Filter Directions",
-      "Dashboard Creation & Publishing",
-      "Power BI Service Integration"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-      </svg>
-    )
-  },
-  {
-    id: "sql",
-    title: "SQL",
-    description: "Master Structured Query Language (SQL) for managing relational databases, writing complex queries, and extracting valuable business insights from your data. This module is included in our comprehensive Data Analytics course.",
-    duration: "Part of 3-Month Data Analytics",
-    level: "Beginner to Advanced",
-    curriculum: [
-      "Introduction to Databases & SQL",
-      "SQL Statements (DDL, DML, DQL, TCL)",
-      "SQL Functions & Data Manipulation",
-      "Joins (Inner, Left, Right, Full, Self, Cross)",
-      "Constraints & Database Relationships",
-      "Set Operators (Union, Intersect, Minus)",
-      "Views & Materialized Views",
-      "Subqueries & Performance Optimization"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <ellipse cx="12" cy="6" rx="8" ry="3" />
-        <path d="M4 14a8 3 0 0 0 16 0" />
-        <path d="M4 10a8 3 0 0 0 16 0" />
-      </svg>
-    )
-  },
-  {
-    id: "python",
-    title: "Python",
-    description: "Learn Python programming from scratch and master essential libraries for data analysis, machine learning, and automation to solve real-world business problems. This module is included in our comprehensive Data Analytics course.",
-    duration: "Part of 3-Month Data Analytics",
-    level: "Beginner to Advanced",
-    curriculum: [
-      "Python Fundamentals",
-      "Data Structures & Algorithms",
-      "Object-Oriented Programming",
-      "File Handling & I/O",
-      "Libraries (NumPy, Pandas)",
-      "Web Scraping",
-      "API Integration",
-      "Python for Data Science"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-      </svg>
-    )
-  },
-  {
-    id: "plsql",
-    title: "PL/SQL",
-    description: "Master Oracle's Procedural Language extension for SQL to develop complex database applications and stored procedures.",
-    duration: "8 Weeks",
-    level: "Intermediate",
-    curriculum: [
-      "PL/SQL Fundamentals",
-      "Procedures & Functions",
-      "Triggers & Packages",
-      "Error Handling",
-      "Cursors & Collections",
-      "Database Optimization",
-      "Performance Tuning",
-      "Real-world Applications"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M8 9h8" />
-        <path d="M8 13h6" />
-        <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z" />
-        <path d="m9 16 3 3 3-3" />
-      </svg>
-    )
-  },
-  {
-    id: "java-fullstack",
-    title: "Java Fullstack",
-    description: "Comprehensive training in Java-based full-stack development covering Core Java, Spring Boot, Hibernate, and modern frontend frameworks for building enterprise applications.",
-    duration: "16 Weeks",
-    level: "Intermediate to Advanced",
-    curriculum: [
-      "Core Java & OOP Fundamentals",
-      "Collections Framework & Multi-threading",
-      "Spring Framework & Spring Boot",
-      "Hibernate ORM & JPA",
-      "RESTful API Development",
-      "Frontend with React/Angular",
-      "Microservices Architecture",
-      "Real-world Project Implementation"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M18 3v4c0 2-2 4-4 4s-4-2-4-4V3" />
-        <path d="M14 21v-4c0-2-2-4-4-4s-4 2-4 4v4" />
-        <path d="M3 7v4c0 2 2 4 4 4s4-2 4-4V7" />
-        <path d="M21 17v-4c0-2-2-4-4-4s-4 2-4 4v4" />
-      </svg>
-    )
-  },
-  {
-    id: "dotnet",
-    title: ".NET - Complete",
-    description: "Comprehensive training in .NET framework and C# for building enterprise applications, web services, and cloud-based solutions with modern architectural patterns.",
-    duration: "14 Weeks",
-    level: "Beginner to Advanced",
-    curriculum: [
-      "C# Programming Fundamentals",
-      "Object-Oriented Programming Principles",
-      "ASP.NET Core MVC & Web API",
-      "Entity Framework Core & Database Design",
-      "LINQ & Lambda Expressions",
-      "Authentication & Authorization",
-      "Azure Cloud Integration",
-      "Enterprise Application Architecture"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M2 12h10" />
-        <path d="M9 4v16" />
-        <path d="m22 12-3-5" />
-        <path d="m22 12-3 5" />
-        <path d="m16 7-4 10" />
-      </svg>
-    )
-  },
-  {
-    id: "salesforce",
-    title: "Salesforce - Complete",
-    description: "Comprehensive training in Salesforce development, administration, and implementation for building cloud-based enterprise solutions.",
-    duration: "12 Weeks",
-    level: "Beginner to Advanced",
-    curriculum: [
-      "Salesforce Administration",
-      "Apex Programming",
-      "Lightning Components",
-      "Visualforce",
-      "Integration & API",
-      "Data Management",
-      "App Builder Certification Prep",
-      "Real-world Implementation Projects"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M12 22v-5" />
-        <path d="m9 8 3-5 3 5" />
-        <path d="m19 11-5-3 5-3" />
-        <path d="m5 11 5-3-5-3" />
-        <path d="M12 13V8" />
-        <path d="m15 19 2-2-2-2" />
-        <path d="m9 19-2-2 2-2" />
-      </svg>
-    )
-  },
-  {
-    id: "fullstack-java",
-    title: "Fullstack Java",
-    description: "Master full-stack development with Java, Spring Boot, and modern frontend frameworks to build complete web applications.",
-    duration: "16 Weeks",
-    level: "Intermediate to Advanced",
-    curriculum: [
-      "Core Java Programming",
-      "Spring Framework & Spring Boot",
-      "RESTful API Development",
-      "JPA & Hibernate",
-      "Frontend Technologies (HTML, CSS, JavaScript)",
-      "React/Angular Integration",
-      "Microservices Architecture",
-      "Full-stack Project Development"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M4 12h16" />
-        <path d="M4 6h16" />
-        <path d="M4 18h16" />
-        <path d="M7 3v18" />
-      </svg>
-    )
-  },
-  {
-    id: "fullstack-python",
-    title: "Fullstack Python",
-    description: "Master end-to-end web application development with Python, Django, and modern JavaScript frameworks for building scalable, secure, and responsive applications.",
-    duration: "14 Weeks",
-    level: "Intermediate",
-    curriculum: [
-      "Python Programming Foundations",
-      "Django Framework & MTV Architecture",
-      "Database Design & Django ORM",
-      "Django REST Framework & API Development",
-      "Frontend Development with HTML, CSS & JavaScript",
-      "React.js Integration & Component Architecture",
-      "Authentication, Authorization & Security",
-      "Deployment, CI/CD & Performance Optimization"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M4 12h16" />
-        <path d="M12 3v18" />
-        <path d="m9 6 3-3 3 3" />
-        <path d="m9 18 3 3 3-3" />
-      </svg>
-    )
-  },
-  {
-    id: "selenium",
-    title: "Selenium",
-    description: "Learn automated testing with Selenium to ensure software quality and reliability across web applications.",
-    duration: "8 Weeks",
-    level: "Intermediate",
-    curriculum: [
-      "Introduction to Test Automation",
-      "Selenium WebDriver",
-      "Locating Elements & Interactions",
-      "Test Frameworks (TestNG, JUnit)",
-      "Page Object Model",
-      "Data-Driven Testing",
-      "Cross-Browser Testing",
-      "CI/CD Integration"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <rect width="18" height="18" x="3" y="3" rx="2" />
-        <circle cx="9" cy="9" r="2" />
-        <path d="m15 9-6 6" />
-        <path d="m15 15-6-6" />
-      </svg>
-    )
-  },
-  {
-    id: "snowflake",
-    title: "Snowflake",
-    description: "Master Snowflake cloud data platform for data warehousing, data lakes, and data engineering solutions.",
-    duration: "6 Weeks",
-    level: "Intermediate",
-    curriculum: [
-      "Snowflake Architecture",
-      "Data Loading & Unloading",
-      "SQL for Snowflake",
-      "Performance Optimization",
-      "Security & Access Control",
-      "Data Sharing & Marketplace",
-      "Integration with BI Tools",
-      "Time Travel & Zero-Copy Cloning"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M2 12h20" />
-        <path d="M12 2v20" />
-        <path d="m4.93 4.93 14.14 14.14" />
-        <path d="m19.07 4.93-14.14 14.14" />
-      </svg>
-    )
-  },
-
-  {
-    id: "fullstack-java-advanced",
-    title: "Fullstack Java Advanced",
-    description: "Become a full-stack Java developer with expertise in both front-end and back-end technologies using Spring Boot and React.",
-    duration: "24 Weeks",
-    level: "Intermediate to Advanced",
-    curriculum: [
-      "Java Core Concepts",
-      "Object-Oriented Programming",
-      "Spring Framework",
-      "Spring Boot",
-      "RESTful API Development",
-      "Frontend with React/Angular",
-      "Database Integration",
-      "Deployment & DevOps"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7" />
-      </svg>
-    )
-  },
-  {
-    id: "fullstack-python-advanced",
-    title: "Fullstack Python Advanced",
-    description: "Master full-stack development with Python, Django, and modern front-end technologies like React.",
-    duration: "24 Weeks",
-    level: "Intermediate to Advanced",
-    curriculum: [
-      "Python Programming",
-      "Django Framework",
-      "RESTful API Development",
-      "Django ORM",
-      "Frontend with React",
-      "Database Integration",
-      "Authentication & Authorization",
-      "Deployment Strategies"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-        <line x1="15" x2="9" y1="9" y2="15" />
-      </svg>
-    )
-  },
-  {
-    id: "selenium testing",
-    title: "Selenium Testing",
-    description: "Learn automated testing with Selenium for web applications, including test design, execution, and CI/CD integration.",
-    duration: "12 Weeks",
-    level: "Intermediate",
-    curriculum: [
-      "Selenium Fundamentals",
-      "WebDriver API",
-      "Test Automation Framework",
-      "Page Object Model",
-      "TestNG/JUnit Integration",
-      "Data-Driven Testing",
-      "CI/CD Pipeline Integration",
-      "Test Reporting & Analysis"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v16.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z" />
-        <path d="M3 7.6v16.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8" />
-        <path d="M15 2v5h5" />
-      </svg>
-    )
-  },
-  {
-    id: "devops",
-    title: "DevOps",
-    description: "Master DevOps methodologies and tools for automating the software delivery lifecycle, improving collaboration, and ensuring continuous deployment of high-quality applications.",
-    duration: "16 Weeks",
-    level: "Intermediate to Advanced",
-    curriculum: [
-      "DevOps Principles & Methodology",
-      "Linux Administration & Shell Scripting",
-      "Version Control with Git & GitHub",
-      "CI/CD Pipeline Implementation",
-      "Infrastructure as Code (Terraform, Ansible)",
-      "Containerization with Docker",
-      "Kubernetes for Container Orchestration",
-      "Monitoring, Logging & Cloud Integration"
-    ],
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-primary">
-        <path d="M12 12m-10 0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0" />
-        <path d="M12 16v-8" />
-        <path d="M12 8l-2 2" />
-        <path d="M12 8l2 2" />
-        <path d="M12 16l-2 -2" />
-        <path d="M12 16l2 -2" />
-      </svg>
-    )
-  }
+const features = [
+  { icon: <Star className="h-5 w-5" />, title: "Industry Expert Trainers", description: "Learn from professionals with extensive real-world experience" },
+  { icon: <GraduationCap className="h-5 w-5" />, title: "Placement Assistance", description: "Resume building, mock interviews, and job referrals" },
+  { icon: <Clock className="h-5 w-5" />, title: "Flexible Schedules", description: "Weekend and weekday batches to fit your schedule" },
+  { icon: <Users className="h-5 w-5" />, title: "Small Batch Sizes", description: "Personalized attention with limited students per batch" },
 ];
 
 export default function CoursesPage() {
-  const [activeSection, setActiveSection] = useState(0);
-  const [formState, setFormState] = useState<FormState>({
-    name: '',
-    email: '',
-    phone: '',
-    course: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
-  
-  const courseWrapperRef = useRef<HTMLDivElement>(null);
-  const courseSectionRefs = useRef<Array<HTMLDivElement | null>>(courses.map(() => null));
-  const formRef = useRef<HTMLDivElement>(null);
-  
-  // Function to scroll to the enquiry form
-  const scrollToForm = () => {
-    if (formRef.current) {
-      // Get the form's position
-      const formPosition = formRef.current.getBoundingClientRect().top + window.scrollY;
-      
-      // Scroll to the form with a smooth animation
-      window.scrollTo({
-        top: formPosition - 100, // Offset to account for any fixed headers
-        behavior: 'smooth'
-      });
-      
-      // Set the course in the form if one is selected
-      if (activeSection >= 0 && activeSection < courses.length) {
-        setFormState(prev => ({ ...prev, course: courses[activeSection].title }));
-      }
-    }
-  };
-  
-  // Handle input change for the form
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  
-  // Handle form submission - redirects to WhatsApp with prefilled message
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate form
-    if (!formState.name || !formState.email || !formState.phone || !formState.course) {
-      alert('Please fill in all required fields');
-      return;
-    }
-    
-    setFormStatus('submitting');
-    
-    // Create formatted message for WhatsApp
-    const message = `Hello! I'm interested in your ${formState.course} course.\n\nDetails:\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\n${formState.message ? `\nMessage: ${formState.message}` : ''}`;
-    
-    // Phone number for WhatsApp (replace with actual number)
-    const phoneNumber = '919345111211'; // India format: 91 + number
-    
-    // Create WhatsApp URL with prefilled message
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Open WhatsApp in new tab
-    window.open(whatsappUrl, '_blank');
-    
-    // Reset form status and show success message
-    setTimeout(() => {
-      setFormStatus('success');
-      // Reset form after success
-      setTimeout(() => {
-        setFormState({
-          name: '',
-          email: '',
-          phone: '',
-          course: '',
-          message: ''
-        });
-        setFormStatus('idle');
-      }, 2000);
-    }, 500);
-  };
-  
-  // Reference for the scrollable middle container
-  const middleContainerRef = useRef<HTMLDivElement>(null);
-
-  // Handle course selection
-  const handleCourseClick = (index: number) => {
-    setActiveSection(index);
-    if (courseSectionRefs.current[index] && middleContainerRef.current) {
-      // Update the form to match the selected course
-      setFormState(prev => ({ ...prev, course: courses[index].title }));
-      
-      // Calculate the scroll position relative to the container
-      const container = middleContainerRef.current;
-      const targetElement = courseSectionRefs.current[index];
-      
-      // For mobile view, ensure we scroll to the top of the selected course element
-      // with a small offset to account for the sticky header
-      const isMobile = window.innerWidth < 768;
-      const mobileOffset = isMobile ? 20 : 0; // Small offset for mobile
-      
-      // Scroll the middle container to show the selected course section
-      setTimeout(() => {
-        container.scrollTo({
-          top: targetElement.offsetTop - container.offsetTop - mobileOffset,
-          behavior: isMobile ? 'smooth' : 'auto' // Smooth scrolling on mobile for better UX
-        });
-        
-        // On mobile, also scroll the page to position the middle container at the top
-        if (isMobile) {
-          const middleContainerTop = container.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: middleContainerTop - 80, // Account for the sticky header
-            behavior: 'smooth'
-          });
-        }
-      }, 50); // Small timeout to ensure elements are properly rendered
-    }
-  };
-  
-  // Effect to update form selection when active section changes
-  useEffect(() => {
-    // Update the form dropdown to match the current active section
-    if (activeSection >= 0 && activeSection < courses.length) {
-      setFormState(prev => ({ ...prev, course: courses[activeSection].title }));
-    }
-  }, [activeSection]);
-  
-  // Desktop-specific effects - mobile handling moved to MobileCourseView component
-  useEffect(() => {
-    // Only add desktop-specific class when on desktop
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        document.body.classList.add('desktop-courses-view');
-      } else {
-        document.body.classList.remove('desktop-courses-view');
-      }
-    };
-    
-    // Call once on mount
-    handleResize();
-    
-    // Add resize listener
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      document.body.classList.remove('desktop-courses-view');
-    };
-  }, []);
-
-  // Function to handle separate scrolling
-  const handleSeparateScrolling = () => {
-    // Handle mouse wheel events
-    const handleWheelOnContainer = (e: Event) => {
-      const wheelEvent = e as WheelEvent;
-      const container = e.currentTarget as HTMLElement;
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      
-      // Check if we're at the top or bottom of the container
-      if (
-        (wheelEvent.deltaY > 0 && scrollTop + clientHeight >= scrollHeight) || // At bottom, scrolling down
-        (wheelEvent.deltaY < 0 && scrollTop <= 0) // At top, scrolling up
-      ) {
-        // We're at the edge, don't prevent default to allow page scrolling
-        return;
-      }
-      
-      // Otherwise, prevent page scrolling when inside container
-      e.stopPropagation();
-    };
-    
-    // Variables for touch handling
-    let touchStartY = 0;
-    let touchStartX = 0;
-    
-    // Handle touch start event
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-      touchStartX = e.touches[0].clientX;
-    };
-    
-    // Modified touch move handler to improve mobile scrolling
-    const handleTouchMove = (e: TouchEvent) => {
-      // Don't interfere with native mobile scrolling
-      // This allows the browser's native touch scrolling to work properly
-      return true;
-    };
-    
-    // Middle section scroll handler to sync the left sidebar
-    const handleMiddleSectionScroll = () => {
-      if (!middleContainerRef.current) return;
-      
-      // Find which course is most visible in the viewport
-      const container = middleContainerRef.current;
-      const containerRect = container.getBoundingClientRect();
-      const containerMidpoint = containerRect.top + containerRect.height / 2;
-      
-      // Find the course section closest to the middle of the viewport
-      let closestSection = 0;
-      let closestDistance = Infinity;
-      
-      courseSectionRefs.current.forEach((section, index) => {
-        if (!section) return;
-        
-        const sectionRect = section.getBoundingClientRect();
-        const sectionMidpoint = sectionRect.top + sectionRect.height / 2;
-        const distance = Math.abs(containerMidpoint - sectionMidpoint);
-        
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestSection = index;
-        }
-      });
-      
-      // Only update if different from current active section
-      if (closestSection !== activeSection) {
-        setActiveSection(closestSection);
-        
-        // Scroll the sidebar to show the new active item
-        const sidebarItem = document.getElementById(`sidebar-course-${courses[closestSection].id}`);
-        if (sidebarItem) {
-          const sidebarContainer = document.querySelector('.courses-sidebar');
-          if (sidebarContainer) {
-            sidebarItem.scrollIntoView({ block: 'center' }); // Removed smooth behavior
-          }
-        }
-      }
-    };
-    
-    // Apply events to all course scroll containers
-    const containers = document.querySelectorAll('.courses-scroll-container');
-    containers.forEach(container => {
-      // Add mouse wheel event - only for desktop
-      if (window.innerWidth > 768) {
-        container.addEventListener('wheel', handleWheelOnContainer);
-      }
-      
-      // Touch events - now passive to allow native scrolling
-      container.addEventListener('touchstart', handleTouchStart as EventListener, { passive: true });
-      // Don't add custom touchmove handlers for mobile to allow native scrolling behavior
-    });
-    
-    // Configure middle container for better mobile scrolling
-    if (middleContainerRef.current) {
-      // Use native touch scrolling - standard property
-      middleContainerRef.current.style.touchAction = 'pan-y';
-      middleContainerRef.current.addEventListener('scroll', handleMiddleSectionScroll);
-    }
-    
-    return () => {
-      containers.forEach(container => {
-        // Clean up event listeners
-        if (window.innerWidth > 768) {
-          container.removeEventListener('wheel', handleWheelOnContainer);
-        }
-        container.removeEventListener('touchstart', handleTouchStart as EventListener);
-        // No touchmove listener to remove since we're not adding it
-      });
-      
-      if (middleContainerRef.current) {
-        middleContainerRef.current.removeEventListener('scroll', handleMiddleSectionScroll);
-      }
-    };
-  };
-  
-  useEffect(() => {
-    // Set up separate scrolling
-    const cleanup = handleSeparateScrolling();
-    
-    // Register ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Hero section animations
-    const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    // Hero title and subtitle animation
-    heroTimeline
-      .fromTo(".hero-title", 
-        { y: 100, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1 }
-      )
-      .fromTo(".hero-subtitle", 
-        { y: 50, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.6"
-      )
-      .fromTo(".hero-line-left", 
-        { width: 0 }, 
-        { width: 64, duration: 0.8 }, 
-        "-=0.4"
-      )
-      .fromTo(".hero-line-right", 
-        { width: 0 }, 
-        { width: 64, duration: 0.8 }, 
-        "-=0.8"
-      )
-      .fromTo(".bg-gradient-circle", 
-        { scale: 0.8, opacity: 0 }, 
-        { scale: 1, opacity: (i) => [0.6, 0.4, 0.5][i % 3], duration: 1.5, stagger: 0.2 }, 
-        "-=1"
-      );
-    
-    // Removed smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'auto';
-    
-    // Set initial active section
-    if (window.location.hash) {
-      const courseId = window.location.hash.substring(1);
-      const courseIndex = courses.findIndex(c => c.id === courseId);
-      if (courseIndex !== -1) {
-        setActiveSection(courseIndex);
-      }
-    }
-    
-    // Animate in the course items
-    const courseItems = gsap.utils.toArray('.course-item');
-    gsap.fromTo(
-      courseItems,
-      { opacity: 0, x: -20 },
-      { 
-        opacity: 1, 
-        x: 0, 
-        stagger: 0.1, 
-        ease: "power2.out", 
-        duration: 0.6 
-      }
-    );
-    
-    // Animate in the main content
-    gsap.fromTo(
-      '.courses-content > div',
-      { opacity: 0, y: 20 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8,
-        ease: "power2.out" 
-      }
-    );
-    
-    // Animate the form
-    gsap.fromTo(
-      formRef.current,
-      { opacity: 0, y: 20 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8,
-        delay: 0.3,
-        ease: "power2.out" 
-      }
-    );
-    
-    // Set up scroll observer for middle container to track visible courses
-    if (middleContainerRef.current) {
-      // Create a new IntersectionObserver for the scrollable container
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              // Find the index of the course that is currently visible
-              const courseElement = entry.target as HTMLElement;
-              const courseId = courseElement.id;
-              const courseIndex = courses.findIndex(c => c.id === courseId);
-              
-              if (courseIndex !== -1) {
-                // Update the active section
-                setActiveSection(courseIndex);
-                
-                // Update active section state only, let React handle the dropdown value
-                // Direct DOM manipulation can cause React reconciliation issues with keys
-              }
-            }
-          });
-        },
-        {
-          root: middleContainerRef.current,
-          threshold: 0.3, // Element is considered visible when 30% is in view (reduced for better mobile experience)
-          rootMargin: '-5% 0px -5% 0px' // Add some margin for better detection
-        }
-      );
-      
-      // Observe each course section
-      courseSectionRefs.current.forEach(section => {
-        if (section) observer.observe(section);
-      });
-      
-      return () => {
-        // Clean up the observer
-        courseSectionRefs.current.forEach(section => {
-          if (section) observer.unobserve(section);
-        });
-      };
-    }
-    
-    // Check URL hash for direct course access
-    if (window.location.hash) {
-      const courseId = window.location.hash.substring(1);
-      const courseIndex = courses.findIndex(c => c.id === courseId);
-      if (courseIndex !== -1) {
-        handleCourseClick(courseIndex);
-      }
-    }
-    
-    return () => {
-      // Clean up scroll behavior when component unmounts
-      document.documentElement.style.scrollBehavior = '';
-    };
-  }, []);
-
   return (
-    <main className="relative overflow-hidden">
-      {/* Background circles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="bg-gradient-circle absolute top-40 right-[-20%] w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl opacity-60"></div>
-        <div className="bg-gradient-circle absolute bottom-1/3 left-[-30%] w-[700px] h-[700px] rounded-full bg-primary/10 blur-3xl opacity-40"></div>
-        <div className="bg-gradient-circle absolute top-[70%] right-[-10%] w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl opacity-50"></div>
-      </div>
-
-      {/* Header Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-black/70 z-10"></div>
-          <div 
-            className="absolute inset-0 bg-cover bg-center z-0" 
-            style={{ backgroundImage: 'url("/images/courses-hero.jpg")' }}
-          ></div>
+    <main className="min-h-screen bg-background text-foreground pb-20">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-b from-primary/10 to-background py-20">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+              Accelerate Your Career With Industry-Ready Skills
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              Comprehensive, hands-on training programs designed by industry experts
+            </p>
+            <a 
+              href="#course-categories" 
+              className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-full font-medium transition-colors"
+            >
+              Explore Courses <MoveRight className="ml-2 h-4 w-4" />
+            </a>
+          </motion.div>
         </div>
         
-        {/* Animated particles - Client-side only component to fix hydration mismatch */}
-        <AnimatedParticles count={20} />
-
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-30">
-          <div className="text-center">
-            <div className="hero-title-reveal overflow-hidden mb-6">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold hero-title text-white drop-shadow-lg">Professional Training Programs</h1>
-            </div>
-            <div className="hero-subtitle-reveal overflow-hidden">
-              <p className="text-xl text-zinc-200 max-w-3xl mx-auto hero-subtitle drop-shadow-md">
-                Industry-relevant courses designed to build skills that match today's job market demands
-              </p>
-            </div>
-            
-            {/* Animated accent lines */}
-            <div className="mt-12 relative flex justify-center items-center">
-              <div className="w-16 h-[2px] bg-primary/80 hero-line-left"></div>
-              <div className="w-4 h-4 rounded-full bg-primary/60 mx-2 animate-pulse"></div>
-              <div className="w-16 h-[2px] bg-primary/80 hero-line-right"></div>
-            </div>
+        {/* Features */}
+        <div className="container mx-auto px-4 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
+                className="bg-card/50 backdrop-blur border border-border/30 rounded-xl p-6 shadow-sm"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm">{feature.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
-      
-      {/* Mobile View - Only shown on small screens */}
-      <div className="md:hidden">
-        <MobileCourseView 
-          courses={courses}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-          formState={formState}
-          setFormState={setFormState}
-        />
-      </div>
 
-      {/* Courses Section with Scrollable Middle Section */}
-      <section className="py-8 md:py-16 bg-muted/10">
-        <div className="container max-w-[1440px] mx-auto px-0 sm:px-2">
-          <div ref={courseWrapperRef} className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-8 relative">
-            
-            {/* Course List (Left Side - Fixed - Hidden on Mobile) */}
-            <div className="hidden md:block md:col-span-3 lg:col-span-3 pl-0 md:pl-3 lg:pl-5">
-              <div className="courses-sidebar overflow-y-auto px-6 py-8 flex-1 h-full courses-scroll-container touch-pan-y">
-                <h2 className="text-xl font-semibold mb-6">Our Courses</h2>
-                <div className="space-y-2 pr-4">
-                    {courses.map((course, index) => (
-                      <div
-                        key={course.id}
-                        id={`sidebar-course-${course.id}`}
-                        className={`course-item p-3 rounded-lg transition-all duration-300 cursor-pointer relative ${activeSection === index ? 'active-course-item pl-4' : 'hover:bg-muted border-l-4 border-transparent pl-4'}`}
-                        onClick={() => handleCourseClick(index)}
-                        ref={(el) => {
-                          // Store reference to sidebar course item for scrolling sync
-                          if (el && index === activeSection) {
-                            // This is the active course item
-                            const sidebarElement = el;
-                            const sidebarContainer = document.querySelector('.courses-sidebar');
-                            if (sidebarContainer) {
-                              // Keep active course visible in sidebar
-                              const containerRect = sidebarContainer.getBoundingClientRect();
-                              const elementRect = sidebarElement.getBoundingClientRect();
-                              
-                              // Check if element is outside visible area
-                              if (elementRect.top < containerRect.top || elementRect.bottom > containerRect.bottom) {
-                                sidebarElement.scrollIntoView({ block: 'center' }); // Removed smooth behavior
-                              }
-                            }
-                          }
-                        }}
-                      >
-                        {/* Active indicator */}
-                        {activeSection === index && (
-                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-lg" />
-                        )}
-                        <div className="flex items-center gap-3">
-                          <div className="shrink-0">
+      {/* Course Categories */}
+      <section id="course-categories" className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold tracking-tight mb-4">Our Course Catalog</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Choose from our wide range of courses designed to help you master in-demand skills
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="space-y-16">
+            {Object.entries(courseCategories).map(([category, courses], categoryIndex) => (
+              <div key={category}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-2xl font-bold mb-8">
+                    <span className="inline-block bg-primary/10 text-primary px-4 py-1 rounded-full text-sm mr-3">{categoryIndex + 1}</span>
+                    {category}
+                  </h2>
+                </motion.div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {courses.map((course, index) => (
+                    <motion.div 
+                      key={course.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1 * index }}
+                      className="group relative bg-card rounded-xl shadow-sm overflow-hidden border border-border hover:shadow-md transition-shadow duration-300"
+                    >
+                      {course.tag && (
+                        <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1">
+                          <Sparkles className="h-3 w-3" />
+                          {course.tag}
+                        </div>
+                      )}
+                      
+                      <Link href={course.href} className="block p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                             {course.icon}
                           </div>
-                          <div>
-                            <h3 className="font-medium">{course.title}</h3>
-                            <p className="text-xs text-muted-foreground">{course.duration}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-              </div>
-            </div>
-            
-            {/* Course Details (Middle Section - Scrollable) - Desktop Only */}
-            <div 
-              ref={middleContainerRef} 
-              className="col-span-1 md:col-span-9 lg:col-span-9 courses-content courses-scroll-container md:max-h-[calc(100vh-100px)] px-4 overflow-y-auto overflow-x-hidden hidden md:block"
-              style={{ 
-                touchAction: 'pan-y', /* Allow vertical touch scrolling */
-                overscrollBehavior: 'auto', /* Allow native scrolling behavior */
-                scrollbarWidth: 'thin', /* Thin scrollbar on Firefox */
-                paddingBottom: '30px' /* Extra padding at bottom */
-              }}
-              onMouseEnter={(e) => {
-                // Prevent page scrolling when hovering over course content
-                document.body.classList.add('prevent-scroll');
-              }}
-              onMouseLeave={(e) => {
-                // Re-enable page scrolling when mouse leaves course content
-                document.body.classList.remove('prevent-scroll');
-              }}
-            >
-              {/* Individual Course Sections */}
-              {courses.map((course, index) => (
-                <div 
-                  key={course.id} 
-                  id={course.id} 
-                  ref={(el) => { courseSectionRefs.current[index] = el; }}
-                  className={`min-h-[65vh] md:min-h-[calc(100vh-200px)] py-6 md:py-10 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'} rounded-xl mb-10 p-4 md:p-6 border-l-4 ${activeSection === index ? 'border-primary' : 'border-transparent'} transition-all duration-300 course-section-scroll touch-pan-y mobile-course-section ${activeSection === index ? 'active-mobile-course' : 'inactive-mobile-course'}`}
-                >
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 md:mb-8 mobile-course-header">
-                    <div className="p-3 md:p-4 rounded-full bg-primary/10">
-                      {course.icon}
-                    </div>
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-bold">{course.title}</h2>
-                      <div className="flex flex-wrap gap-3 md:gap-4 mt-2 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                          </svg>
-                          <span>{course.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                          </svg>
-                          <span>{course.level}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Student Performance section removed */}
-                  
-                  <Card className="border-none shadow-md overflow-hidden">
-                    <CardContent className="p-6">
-                      <div className="prose max-w-none">
-                        <h3 className="text-xl font-semibold mb-4">Course Overview</h3>
-                        <p className="text-muted-foreground text-base md:text-lg mb-6 leading-relaxed mobile-course-description">{course.description}</p>
-                        
-                        <h3 className="text-xl font-semibold mb-4">What You'll Learn</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-8">
-                          {course.curriculum.map((item, i) => (
-                            <div key={i} className="flex items-start gap-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary mt-0.5 shrink-0">
-                                <polyline points="9 11 12 14 22 4" />
-                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                              </svg>
-                              <span>{item}</span>
-                            </div>
-                          ))}
+                          <h3 className="text-xl font-bold">{course.name}</h3>
                         </div>
                         
-                        <h3 className="text-xl font-semibold mb-4">Course Format</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mobile-course-content">
-                          <div className="bg-muted/50 p-4 rounded-lg">
-                            <div className="flex items-center gap-2 mb-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary">
-                                <path d="M12 20v-6M6 20V10M18 20V4" />
-                              </svg>
-                              <h4 className="font-medium">Skill Level</h4>
-                            </div>
-                            <p className="text-sm text-muted-foreground">{course.level}</p>
-                          </div>
-                          <div className="bg-muted/50 p-4 rounded-lg">
-                            <div className="flex items-center gap-2 mb-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                                <line x1="16" x2="16" y1="2" y2="6" />
-                                <line x1="8" x2="8" y1="2" y2="6" />
-                                <line x1="3" x2="21" y1="10" y2="10" />
-                              </svg>
-                              <h4 className="font-medium">Duration</h4>
-                            </div>
-                            <p className="text-sm text-muted-foreground">{course.duration}</p>
-                          </div>
-                          <div className="bg-muted/50 p-4 rounded-lg">
-                            <div className="flex items-center gap-2 mb-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-primary">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                              </svg>
-                              <h4 className="font-medium">Certification</h4>
-                            </div>
-                            <p className="text-sm text-muted-foreground">Industry Recognized Certificate</p>
-                          </div>
+                        <div className="mt-2">
+                          <p className="text-muted-foreground">
+                            {course.description || "Coming soon"}
+                          </p>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  {/* Career Opportunities */}
-                  <Card className="border-none shadow-md overflow-hidden mt-8">
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold mb-4">Career Opportunities</h3>
-                      <p className="text-muted-foreground mb-4">
-                        Graduates of this program have gone on to secure roles as {course.title} Specialists, 
-                        Consultants, and Team Leads in various industries including technology, finance, 
-                        healthcare, and manufacturing.
-                      </p>
-                      
-                      <Button size="lg" className="mt-4" onClick={scrollToForm}>
-                        Enroll Now
-                      </Button>
-                    </CardContent>
-                  </Card>
+                        
+                        <div className="mt-4 inline-flex items-center text-primary font-medium gap-1 group-hover:translate-x-1 transition-transform duration-300">
+                          {course.hasPage ? "View Course Details" : "Coming Soon"}
+                          <ArrowRight className="h-4 w-4 ml-1" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Enquiry Form Section - Full Width Above Footer */}
-      <section id="enquiry-form" className="enquiry-form-section py-12 md:py-16 bg-gradient-to-b from-muted/5 to-background border-t border-zinc-800/40">
-        <div className="container max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Advance Your Skills?</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Fill out the form below and our team will get back to you with more information about our professional training programs.</p>
-          </div>
-          
-          <div className="max-w-md mx-auto">
-            <div ref={formRef} className="bg-zinc-900/70 p-8 rounded-xl shadow-lg border border-zinc-800">
-              <h3 className="text-xl font-semibold mb-6 text-primary">Enquire Now</h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-1">Full Name</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value={formState.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 bg-zinc-800/70 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-white"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formState.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 bg-zinc-800/70 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-white"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    value={formState.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 bg-zinc-800/70 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-white"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="course" className="block text-sm font-medium mb-1">Interested Course</label>
-                  <div className="relative">
-                    <div className="flex items-center justify-between p-3 bg-zinc-800/70 border border-zinc-700 rounded-md">
-                      <span className={formState.course ? 'text-white' : 'text-gray-500'}>{
-                        formState.course || 'Select a course'
-                      }</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <select 
-                      id="course" 
-                      name="course" 
-                      value={formState.course}
-                      onChange={handleInputChange}
-                      required
-                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                    >
-                      <option value="">Select a course</option>
-                      {courses.map((course, index) => (
-                        <option key={`opt-${course.id}-${index}`} value={course.title}>{course.title}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">Message (Optional)</label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    value={formState.message}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-3 py-2 bg-zinc-800/70 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-white"
-                  ></textarea>
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-semibold shadow-lg flex items-center justify-center gap-2 border border-zinc-700 transition-all duration-300 hover:shadow-primary/20"
-                  disabled={formStatus === 'submitting'}
-                >
-                  {formStatus === 'submitting' ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing...
-                    </>
-                  ) : formStatus === 'success' ? (
-                    <>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      WhatsApp Opened
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="h-6 w-6 bg-[#25D366] rounded-full flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" viewBox="0 0 448 512" className="h-3.5 w-3.5">
-                            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-                          </svg>
-                        </span>
-                        <span>WhatsApp</span>
-                      </div>
-                    </>
-                  )}
-                </Button>
-                
-                {formStatus === 'success' && (
-                  <div className="text-center text-sm text-primary">
-                    Thank you for your enquiry! We'll get back to you shortly.
-                  </div>
-                )}
-                
-                {formStatus === 'error' && (
-                  <div className="text-center text-sm text-destructive">
-                    There was an error submitting your enquiry. Please try again.
-                  </div>
-                )}
-              </form>
-            </div>
-          </div>
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 mt-16">
+        <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Enhance Your Skills?</h2>
+          <p className="text-muted-foreground mb-6">Choose from our wide range of courses and take the first step towards career growth</p>
+          <a 
+            href="https://wa.me/919345111211" 
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-full font-medium transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Chat with Course Advisor
+          </a>
         </div>
       </section>
     </main>

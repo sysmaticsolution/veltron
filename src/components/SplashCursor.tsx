@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface ColorRGB {
   r: number;
@@ -69,7 +69,21 @@ export default function SplashCursor({
   TRANSPARENT = true
 }: SplashCursorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768 || 
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return; // Guard canvas early
@@ -1557,22 +1571,19 @@ export default function SplashCursor({
         position: "fixed",
         top: 0,
         left: 0,
-        zIndex: 50, // Value between background images (z-10) and content (z-20)
+        zIndex: 5, // Lower z-index to ensure it's below the navigation bar
         pointerEvents: "none",
         width: "100%",
         height: "100%",
         overflow: "hidden"
       }}
     >
-      <canvas
-        ref={canvasRef}
-        id="fluid"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "block",
-        }}
-      />
+      {isMobile ? null : (
+        <canvas
+          ref={canvasRef}
+          className="fixed inset-0 w-full h-full z-[5] pointer-events-none select-none"
+        />
+      )}
     </div>
   );
 }

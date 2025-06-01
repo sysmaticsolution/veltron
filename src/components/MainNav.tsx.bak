@@ -5,14 +5,113 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+// Theme toggle removed
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  BarChart3, Globe, Search, Megaphone, MonitorSmartphone, 
-  Smartphone, GraduationCap, BookOpen, Database, LineChart, 
-  PieChart, Code, Brackets, Braces, Server, Cloud, Layout, 
-  FileCode, ChevronUp, ChevronDown, Menu, X 
-} from "lucide-react";
+import { BarChart3, Globe, Search, Megaphone, MonitorSmartphone, Smartphone, GraduationCap, BookOpen, Database, LineChart, PieChart, Code, Brackets, Braces, Server, Cloud, Layout, FileCode, ChevronUp, ChevronDown, Menu, X } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+
+// ChevronIcon component for navigation menu
+const ChevronIcon = ({ open }: { open: boolean }) => (
+  open ? <ChevronUp className="ml-1 h-3 w-3" /> : <ChevronDown className="ml-1 h-3 w-3" />
+);
+
+// Define services and courses data with icons
+const services = [
+  { 
+    name: "Data Analytics", 
+    href: "/services/data-analytics", 
+    description: "Transform data into actionable insights",
+    icon: <BarChart3 className="h-5 w-5" />
+  },
+  { 
+    name: "Web Development", 
+    href: "/services/web-development", 
+    description: "Custom websites with modern technologies",
+    icon: <Globe className="h-5 w-5" />
+  },
+  { 
+    name: "SEO Services", 
+    href: "/services/seo-services", 
+    description: "Improve visibility and organic traffic",
+    icon: <Search className="h-5 w-5" />
+  },
+  { 
+    name: "Digital Marketing", 
+    href: "/services/digital-marketing", 
+    description: "Strategic marketing for measurable results",
+    icon: <Megaphone className="h-5 w-5" />
+  },
+  { 
+    name: "Web Application", 
+    href: "/services/web-application", 
+    description: "Enterprise-grade web applications",
+    icon: <MonitorSmartphone className="h-5 w-5" />
+  },
+  { 
+    name: "Mobile App Development", 
+    href: "/services/mobile-app-development", 
+    description: "Native and cross-platform mobile apps",
+    icon: <Smartphone className="h-5 w-5" />
+  },
+  { 
+    name: "Corporate Training", 
+    href: "/services/corporate-training", 
+    description: "Professional upskilling programs",
+    icon: <GraduationCap className="h-5 w-5" />
+  },
+];
+
+const courses = [
+  { name: "Data Analytics", href: "/courses/data-analytics", icon: <BarChart3 className="h-6 w-6" /> },
+  { name: "Tableau", href: "/courses#tableau", icon: <PieChart className="h-6 w-6" /> },
+  { name: "Power BI", href: "/courses#power-bi", icon: <LineChart className="h-6 w-6" /> },
+  { name: "SQL", href: "/courses#sql", icon: <Database className="h-6 w-6" /> },
+  { name: "Python", href: "/courses#python", icon: <Code className="h-6 w-6" /> },
+  { name: "React", href: "/courses#react", icon: <Brackets className="h-6 w-6" /> },
+  { name: "Angular", href: "/courses#angular", icon: <Braces className="h-6 w-6" /> },
+  { name: "Java Fullstack", href: "/courses#java-fullstack", icon: <FileCode className="h-6 w-6" /> },
+  { name: "Python Fullstack", href: "/courses#python-fullstack", icon: <Code className="h-6 w-6" /> },
+  { name: ".NET - Complete", href: "/courses#dotnet", icon: <Braces className="h-6 w-6" /> },
+  { name: "DevOps", href: "/courses#devops", icon: <Server className="h-6 w-6" /> },
+  { name: "AWS", href: "/courses#aws", icon: <Cloud className="h-6 w-6" /> },
+  { name: "Azure", href: "/courses#azure", icon: <Cloud className="h-6 w-6" /> },
+  { name: "UI UX - Complete", href: "/courses#ui-ux", icon: <Layout className="h-6 w-6" /> },
+  { name: "Salesforce - Complete", href: "/courses#salesforce", icon: <Database className="h-6 w-6" /> },
+];
+
+// Icons for course categories
+const categoryIcons: Record<string, React.ReactNode> = {
+  "Data & Analytics": <BarChart3 className="h-5 w-5" />,
+  "Web Development": <Globe className="h-5 w-5" />,
+  "DevOps & More": <MonitorSmartphone className="h-5 w-5" />
+};
+
+// Group courses by category
+const courseCategories: Record<string, string[]> = {
+  "Data & Analytics": ["Data Analytics", "Tableau", "Power BI", "SQL", "Python"],
+  "Web Development": ["React", "Angular", "Java Fullstack", "Python Fullstack", ".NET - Complete"],
+  "DevOps & More": ["DevOps", "AWS", "Azure", "UI UX - Complete", "Salesforce - Complete"]
+};
+
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { BarChart3, Globe, Search, Megaphone, MonitorSmartphone, Smartphone, GraduationCap, BookOpen, Database, LineChart, PieChart, Code, Brackets, Braces, Server, Cloud, Layout, FileCode, ChevronUp, ChevronDown, Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -108,7 +207,7 @@ const courseCategories: Record<string, string[]> = {
 
 export default function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   
@@ -134,7 +233,7 @@ export default function MainNav() {
 
   // Function to handle menu item click and close dropdown
   const handleItemClick = () => {
-    setActiveItem(undefined);
+    setActiveItem(null);
   };
 
   useEffect(() => {
@@ -178,7 +277,7 @@ export default function MainNav() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
               
-              {/* Courses Link - Changed from dropdown to direct link */}
+              {/* Courses Link */}
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   asChild
@@ -293,16 +392,6 @@ export default function MainNav() {
             >
               <div className="py-6 px-1 space-y-4 bg-background/60 backdrop-blur-md rounded-xl mt-3 border border-white/10 shadow-lg">
                 <MobileNavItem href="/" active={pathname === "/"}>Home</MobileNavItem>
-                
-                {/* Mobile Courses Link - Changed from accordion to direct link */}
-                <MobileNavItem 
-                  href="/courses" 
-                  active={pathname.includes("/courses")} 
-                  icon={<BookOpen className="h-4 w-4 mr-2" />}
-                >
-                  Courses
-                </MobileNavItem>
-                
                 <MobileAccordion 
                   title="Services" 
                   icon={<Globe className="h-4 w-4 mr-2" />}
@@ -320,38 +409,37 @@ export default function MainNav() {
                         <div className="h-5 w-5 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center text-primary mr-2 shrink-0" aria-hidden="true">
                           {s.icon}
                         </div>
-                        {s.name}
-                      </Link>
-                    ))}
-                  </div>
-                </MobileAccordion>
-                
-                <MobileNavItem href="/about" active={pathname === "/about"}>About</MobileNavItem>
-                <MobileNavItem href="/contact" active={pathname === "/contact"}>Contact</MobileNavItem>
-                <div className="pt-4 mt-4 border-t border-white/10">
-                  <Button asChild className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary text-white font-medium py-6 rounded-xl shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
-                    <Link href="/contact" aria-label="Contact Veltron to get started with our services">Get Started</Link>
-                  </Button>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  </header>
+);
+
+// Reusable subcomponents
+function NavItem({ href, active, children }: { href: string; active?: boolean; children: React.ReactNode }) {
+  return (
+    <Link href={href} className={cn(
+      "px-5 py-2 text-sm font-medium rounded-full transition-all duration-300",
+      active 
+        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20" 
+        : "hover:bg-accent/70 hover:text-accent-foreground hover:shadow-sm hover:scale-105"
+    )}>
+      {children}
+    </Link>
   );
 }
 
-// Reusable subcomponents
-function MobileNavItem({ href, active, children, icon }: { href: string; active?: boolean; children: React.ReactNode; icon?: React.ReactNode }) {
+function MobileNavItem({ href, active, children }: { href: string; active?: boolean; children: React.ReactNode }) {
   return (
     <Link href={href} className={cn(
-      "block py-3 px-4 rounded-lg transition-all duration-200 flex items-center",
+      "block py-3 px-4 rounded-lg transition-all duration-200",
       active 
         ? "bg-gradient-to-r from-primary/20 to-primary/5 text-primary font-medium border-l-4 border-primary pl-5" 
         : "hover:bg-accent/20 hover:text-accent-foreground hover:pl-5"
     )}>
-      {icon && icon}
       {children}
     </Link>
   );
@@ -416,4 +504,6 @@ function MobileAccordion({ title, icon, children, onItemClick }: AccordionProps)
       </AnimatePresence>
     </div>
   );
+}
+
 }
