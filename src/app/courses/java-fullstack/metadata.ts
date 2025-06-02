@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+   import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Java Full Stack Development Training in Chennai | Veltron Sysmatic Solution",

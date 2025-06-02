@@ -645,7 +645,7 @@ export default function DataAnalyticsPage() {
               <div className="absolute left-0 top-0 bottom-0 w-2 h-full bg-blue-600/80 rounded-full group-hover:h-[105%] transition-all duration-500"></div>
               
               {/* Step number */}
-              <div className="absolute left-0 top-8 w-10 h-10 -ml-5 rounded-full bg-blue-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-blue-500/30 group-hover:-translate-y-1">1</div>
+              <div className="absolute left-0 top-8 w-13 h-15 -ml-5 rounded-full bg-blue-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-blue-500/30 group-hover:-translate-y-1">1</div>
               
               {/* Content with parallax effect */}
               <div className="relative z-10 transition-all duration-500 ease-out group-hover:translate-x-2">
@@ -667,7 +667,7 @@ export default function DataAnalyticsPage() {
               <div className="absolute left-0 top-0 bottom-0 w-2 h-full bg-purple-600/80 rounded-full group-hover:h-[105%] transition-all duration-500"></div>
               
               {/* Step number */}
-              <div className="absolute left-0 top-8 w-10 h-10 -ml-5 rounded-full bg-purple-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-purple-500/30 group-hover:-translate-y-1">2</div>
+              <div className="absolute left-0 top-8 w-13 h-15 -ml-5 rounded-full bg-purple-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-purple-500/30 group-hover:-translate-y-1">2</div>
               
               {/* Content with parallax effect */}
               <div className="relative z-10 transition-all duration-500 ease-out group-hover:translate-x-2">
@@ -689,7 +689,7 @@ export default function DataAnalyticsPage() {
               <div className="absolute left-0 top-0 bottom-0 w-2 h-full bg-teal-600/80 rounded-full group-hover:h-[105%] transition-all duration-500"></div>
               
               {/* Step number */}
-              <div className="absolute left-0 top-8 w-10 h-10 -ml-5 rounded-full bg-teal-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-teal-500/30 group-hover:-translate-y-1">3</div>
+              <div className="absolute left-0 top-8 w-13 h-15 -ml-5 rounded-full bg-teal-600 shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-teal-500/30 group-hover:-translate-y-1">3</div>
               
               {/* Content with parallax effect */}
               <div className="relative z-10 transition-all duration-500 ease-out group-hover:translate-x-2">
@@ -711,7 +711,7 @@ export default function DataAnalyticsPage() {
               <div className="absolute left-0 top-0 bottom-0 w-2 h-[50%] bg-primary/80 rounded-full group-hover:h-[105%] transition-all duration-500"></div>
               
               {/* Step number */}
-              <div className="absolute left-0 top-8 w-10 h-10 -ml-5 rounded-full bg-primary shadow-lg flex items-center justify-center text-white font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-primary/30 group-hover:-translate-y-1">4</div>
+              <div className="absolute left-0 top-8 w-13 h-15 -ml-5 rounded-full bg-primary shadow-lg flex items-center justify-center text-black font-bold text-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-primary/30 group-hover:-translate-y-1">4</div>
               
               {/* Content with parallax effect */}
               <div className="relative z-10 transition-all duration-500 ease-out group-hover:translate-x-2">

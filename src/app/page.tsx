@@ -623,31 +623,12 @@ export default function Home() {
             </Button>
           </div>
           
-          <div className="mt-20 flex justify-center">
-            <Link href="#services" aria-label="Scroll down to services section" className="focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-2">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className="animate-bounce w-6 h-6 text-muted-foreground"
-                aria-hidden="true"
-              >
-                <path d="m6 9 6 6 6-6"/>
-              </svg>
-              <span className="sr-only">Scroll down to explore our services</span>
-            </Link>
-          </div>
+          {/* Down arrow button removed */}
         </div>
       </section>
 
       {/* Shared Background Container - wraps both services and courses sections */}
-      <div className="relative bg-services-courses-section">
+      <div id="services" className="relative bg-services-courses-section">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 w-full h-full overflow-hidden parallax-bg-container" style={{ zIndex: 0 }}>
           <Image

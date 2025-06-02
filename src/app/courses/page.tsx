@@ -5,19 +5,43 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BarChart3, Code, GitBranch, Database, Brackets, Braces, FileCode, Server, CloudCog, NetworkIcon, Cpu, Bot, MessageSquare, ArrowRight, MoveRight, Sparkles, Star, GraduationCap, Clock, Users, MessageCircle } from "lucide-react";
 
+// Define TypeScript interfaces for our course objects
+interface CourseBase {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+  hasPage: boolean;
+  description: string;
+}
+
+interface CourseWithTag extends CourseBase {
+  tag: string;
+}
+
+// Type for course that may or may not have a tag
+type Course = CourseBase | CourseWithTag;
+
+// Helper function to type check if a course has a tag
+function hasTag(course: Course): course is CourseWithTag {
+  return 'tag' in course;
+}
+
 const courseCategories = {
-  "Data & Analytics": [
+  "Data Analytics": [
     { name: "Data Analytics", href: "/courses/data-analytics", icon: <BarChart3 className="h-6 w-6" />, hasPage: true, tag: "Most Popular", description: "Transform data into actionable insights" },
+  ],
+  "Programming & Development": [
     { name: "Python", href: "/courses/python", icon: <Code className="h-6 w-6" />, hasPage: true, description: "Learn Python programming from basics to advanced" },
     { name: "DSA Training", href: "/courses/dsa", icon: <GitBranch className="h-6 w-6" />, hasPage: true, description: "Master algorithms and ace technical interviews" },
-    { name: "Python Full Stack", href: "/courses/python-fullstack", icon: <Code className="h-6 w-6" />, hasPage: true, description: "End-to-end web development with Python" },
+    { name: "Java Training", href: "/courses/java-training", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Core Java programming fundamentals" },
   ],
   "Web Development": [
+    { name: "Python Full Stack", href: "/courses/python-fullstack", icon: <Code className="h-6 w-6" />, hasPage: true, description: "End-to-end web development with Python" },
     { name: "Angular", href: "/courses/angular", icon: <Brackets className="h-6 w-6" />, hasPage: true, tag: "Trending", description: "Master modern frontend development" },
     { name: "React Training", href: "/courses/react", icon: <Braces className="h-6 w-6" />, hasPage: true, description: "Build dynamic UIs with React and Redux" },
     { name: "Java Full Stack", href: "/courses/java-fullstack", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Full stack development with Java technologies" },
     { name: "Java + Spring Boot", href: "/courses/java-spring", icon: <Server className="h-6 w-6" />, hasPage: true, description: "Enterprise application development with Spring" },
-    { name: "DOT NET Training", href: "/courses/dotnet", icon: <Braces className="h-6 w-6" />, hasPage: true, description: "C# and .NET framework development" },
+    { name: ".NET Training", href: "/courses/dotnet", icon: <Braces className="h-6 w-6" />, hasPage: true, description: "C# and .NET framework development" },
   ],
   "DevOps & Cloud": [
     { name: "AWS Course", href: "/courses/aws", icon: <CloudCog className="h-6 w-6" />, hasPage: true, tag: "In Demand", description: "Master cloud computing with AWS" },
@@ -28,7 +52,6 @@ const courseCategories = {
   ],
   "Testing & Automation": [
     { name: "Java Selenium Basics", href: "/courses/java-selenium", icon: <Bot className="h-6 w-6" />, hasPage: true, description: "Web automation testing with Selenium WebDriver" },
-    { name: "Java Training", href: "/courses/java-training", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Core Java programming fundamentals" },
     { name: "Interview Preparation", href: "/courses/interview-prep", icon: <MessageSquare className="h-6 w-6" />, hasPage: true, tag: "New", description: "Ace technical interviews across domains" },
   ]
 };
@@ -116,7 +139,7 @@ export default function CoursesPage() {
                   transition={{ duration: 0.5 }}
                 >
                   <h2 className="text-2xl font-bold mb-8">
-                    <span className="inline-block bg-primary/10 text-primary px-4 py-1 rounded-full text-sm mr-3">{categoryIndex + 1}</span>
+                    <span className="inline-block bg-primary/10 text-primary px-4 py-1 rounded-full text-xl mr-3">{categoryIndex + 1}</span>
                     {category}
                   </h2>
                 </motion.div>
@@ -131,7 +154,7 @@ export default function CoursesPage() {
                       transition={{ duration: 0.5, delay: 0.1 * index }}
                       className="group relative bg-card rounded-xl shadow-sm overflow-hidden border border-border hover:shadow-md transition-shadow duration-300"
                     >
-                      {course.tag && (
+                      {hasTag(course) && (
                         <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1">
                           <Sparkles className="h-3 w-3" />
                           {course.tag}

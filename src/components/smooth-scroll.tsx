@@ -41,21 +41,32 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
     // Skip smooth scrolling on iOS devices to use native scrolling
     if (isIOS) {
-      // Apply styles to make native iOS scrolling feel better
-      if (smoothContent.current) {
-        // Use setAttribute for non-standard properties
-        smoothContent.current.setAttribute('style', '-webkit-overflow-scrolling: touch; overflow-y: auto;');
+      // Make sure we're not interfering with native iOS scrolling
+      if (smoothWrapper.current && smoothContent.current) {
+        // Remove any wrapper styling that might interfere with native scrolling
+        smoothWrapper.current.style.position = 'static';
+        smoothWrapper.current.style.overflow = 'visible';
+        smoothWrapper.current.style.height = 'auto';
+        
+        // Make content directly scrollable
+        smoothContent.current.style.position = 'static';
+        smoothContent.current.style.overflow = 'visible';
+        smoothContent.current.style.height = 'auto';
+        smoothContent.current.style.width = '100%';
+        
+        // Ensure we have touch scrolling
+        document.body.setAttribute('style', '-webkit-overflow-scrolling: touch; overflow-y: auto;');
       }
       return;
     }
 
-    // Create the smooth scroller with optimized settings for different devices
+    // Only create smooth scrolling for non-iOS devices
     const smoother = ScrollSmoother.create({
       wrapper: smoothWrapper.current,
       content: smoothContent.current,
       smooth: isMobile ? 0.8 : 1.2, // Lower smoothness on mobile for better performance
       effects: !isMobile, // Disable effects on mobile devices
-      normalizeScroll: !isIOS, // Don't normalize scroll on iOS devices
+      normalizeScroll: false, // Don't normalize scroll as it can cause issues
       ignoreMobileResize: true
     });
     
@@ -81,6 +92,12 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     }
   }, [pathname]);
 
+  // For iOS devices, return children directly without the smooth scrolling wrapper
+  if (isIOS) {
+    return <>{children}</>;
+  }
+  
+  // For non-iOS devices, use smooth scrolling wrapper
   return (
     <div ref={smoothWrapper} className="smooth-wrapper">
       <div ref={smoothContent} className="smooth-content">

@@ -178,20 +178,6 @@ export default function MainNav() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
               
-              {/* Courses Link - Changed from dropdown to direct link */}
-              <NavigationMenuItem>
-                <NavigationMenuLink 
-                  asChild
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    "rounded-full bg-background/10 hover:bg-background/30 hover:text-primary data-[active]:bg-primary/90 data-[active]:text-primary-foreground font-medium",
-                    pathname.includes("/courses") && "bg-primary/90 text-primary-foreground"
-                  )}
-                >
-                  <Link href="/courses" aria-label="Browse all courses">Courses</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
               {/* Services Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger 
@@ -234,7 +220,19 @@ export default function MainNav() {
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-
+                {/* Courses Link - Changed from dropdown to direct link */}
+                <NavigationMenuItem>
+                <NavigationMenuLink 
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    "rounded-full bg-background/10 hover:bg-background/30 hover:text-primary data-[active]:bg-primary/90 data-[active]:text-primary-foreground font-medium",
+                    pathname.includes("/courses") && "bg-primary/90 text-primary-foreground"
+                  )}
+                >
+                  <Link href="/courses" aria-label="Browse all courses">Courses</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   asChild
