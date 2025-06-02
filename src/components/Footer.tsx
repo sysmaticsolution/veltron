@@ -118,6 +118,7 @@ export default function Footer() {
             
             {/* Programming & Development */}
             <li><Link href="/courses/python" className="hover:text-primary" aria-label="Learn Python programming from basics to advanced">Python</Link></li>
+            <li><Link href="/courses/plsql" className="hover:text-primary" aria-label="Master database programming with Oracle PL/SQL">PL/SQL</Link></li>
             <li><Link href="/courses/dsa" className="hover:text-primary" aria-label="Master algorithms and data structures">DSA Training</Link></li>
             
             {/* Web Development */}

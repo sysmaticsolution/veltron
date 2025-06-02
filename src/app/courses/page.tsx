@@ -32,6 +32,7 @@ const courseCategories = {
   ],
   "Programming & Development": [
     { name: "Python", href: "/courses/python", icon: <Code className="h-6 w-6" />, hasPage: true, description: "Learn Python programming from basics to advanced" },
+    { name: "PL/SQL", href: "/courses/plsql", icon: <Database className="h-6 w-6" />, hasPage: true, tag: "New", description: "Master database programming with Oracle PL/SQL" },
     { name: "DSA Training", href: "/courses/dsa", icon: <GitBranch className="h-6 w-6" />, hasPage: true, description: "Master algorithms and ace technical interviews" },
     { name: "Java Training", href: "/courses/java-training", icon: <FileCode className="h-6 w-6" />, hasPage: true, description: "Core Java programming fundamentals" },
   ],

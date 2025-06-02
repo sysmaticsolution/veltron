@@ -109,10 +109,10 @@ export default function AboutPage() {
               About <span className="text-primary">Veltron</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
-              Established in 2024, Veltron is a leading technology solutions provider, empowering businesses with innovative technology solutions and professional training.
+              Founded in 2019, Veltron has been at the forefront of delivering innovative and results-driven IT services, empowering businesses with technology solutions and professional training.
             </p>
             <div className="inline-block bg-primary/10 rounded-lg px-4 py-2 text-primary font-medium">
-              Established 2024
+              Trusted by clients since 2019
             </div>
           </div>
         </div>
@@ -124,10 +124,16 @@ export default function AboutPage() {
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Our Story</h2>
           <div className="prose prose-lg max-w-3xl mx-auto text-muted-foreground">
             <p>
-              Veltron was founded in 2024 with a bold vision to redefine the technology solutions landscape. Despite being new to the industry, we bring together a wealth of expertise and cutting-edge approaches that position us at the forefront of technology innovation.
+              Founded in 2019, Veltron has been at the forefront of delivering innovative and results-driven IT services. Our core offerings span web development, data analytics, digital marketing, mobile and enterprise solutions—designed to help businesses streamline operations and accelerate growth.
             </p>
             <p>
-              What sets us apart is our fresh perspective combined with deep technical knowledge. We're not constrained by legacy thinking or outdated methodologies. Instead, we've built our foundation on the latest technologies, frameworks, and best practices.
+              What began as a passion project by a group of tech enthusiasts has evolved into a full-service IT firm trusted by clients across various industries. With years of hands-on experience, we've built a reputation for reliability, transparency, and performance.
+            </p>
+            <p>
+              At Veltron, we don't just follow technology trends—we help shape them. Our client-first approach, combined with deep technical expertise, allows us to deliver custom-tailored solutions that meet real business challenges.
+            </p>
+            <p>
+              We proudly use the phrase "Trusted by clients since 2019", reflecting our long-standing commitment to excellence—even before our formal registration in 2024. Our journey and success have been fueled by client trust, strong referrals, and the consistent quality we deliver in every project.
             </p>
           </div>
         </div>
