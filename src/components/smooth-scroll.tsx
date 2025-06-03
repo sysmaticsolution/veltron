@@ -39,8 +39,8 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-    // Skip smooth scrolling on iOS devices to use native scrolling
-    if (isIOS) {
+    // Skip smooth scrolling on iOS devices and mobile devices to use native scrolling
+    if (isIOS || isMobile || window.innerWidth < 992) {
       // Make sure we're not interfering with native iOS scrolling
       if (smoothWrapper.current && smoothContent.current) {
         // Remove any wrapper styling that might interfere with native scrolling

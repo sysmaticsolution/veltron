@@ -32,7 +32,8 @@ export default function Footer() {
   return (
     <footer
       id="site-footer"
-      className="bg-background border-t border-white/10 py-8 sm:py-12 relative overflow-hidden"
+      className="bg-background border-t border-white/10 py-8 sm:py-12 relative overflow-hidden ios-footer"
+      style={{ position: 'relative', zIndex: 10 }}
     >
       {/* Decorative circles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
