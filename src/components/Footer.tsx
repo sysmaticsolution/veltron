@@ -32,7 +32,7 @@ export default function Footer() {
   return (
     <footer
       id="site-footer"
-      className="bg-background border-t border-white/10 py-12 relative overflow-hidden"
+      className="bg-background border-t border-white/10 py-8 sm:py-12 relative overflow-hidden"
     >
       {/* Decorative circles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
@@ -47,7 +47,7 @@ export default function Footer() {
       </div>
 
       {/* Main grid: About / Services / Training / Contact */}
-      <div className="container grid gap-8 md:grid-cols-2 lg:grid-cols-4 relative z-10">
+      <div className="container grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 relative z-10 px-4 sm:px-6">
         {/* About section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -70,7 +70,7 @@ export default function Footer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-md font-bold bg-clip-text pl-2 text-center text-transparent bg-gradient-to-r from-white via-white/80 to-white animate-pulse"
+            className="text-sm sm:text-md font-bold bg-clip-text pl-2 text-center text-transparent bg-gradient-to-r from-white via-white/80 to-white animate-pulse"
             style={{ animationDuration: '3s' }}
           >
             Veltron Sysmatic Solution Pvt Ltd
@@ -79,7 +79,7 @@ export default function Footer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm text-center pl-2 text-muted-foreground max-w-xs mx-auto"
+            className="text-xs sm:text-sm text-center pl-2 text-muted-foreground max-w-xs mx-auto"
           >
             Empowering Businesses With Innovation & Strategic Empowerment.
           </motion.div>
@@ -92,8 +92,8 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="space-y-4"
         >
-          <h3 className="font-medium text-lg pl-4">Services</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground pl-4">
+          <h3 className="font-medium text-base sm:text-lg pl-2 sm:pl-4">Services</h3>
+          <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground pl-2 sm:pl-4">
             <li><Link href="/services/data-analytics" className="hover:text-primary" aria-label="Explore our Data Analytics services">Data Analytics</Link></li>
             <li><Link href="/services/web-development" className="hover:text-primary" aria-label="Learn about our Web Development services">Web Development</Link></li>
             <li><Link href="/services/web-application" className="hover:text-primary" aria-label="View our Web Application development offerings">Web Application</Link></li>
@@ -111,8 +111,8 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="space-y-4"
         >
-          <h3 className="font-medium text-lg pl-4">Courses</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground pl-4">
+          <h3 className="font-medium text-base sm:text-lg pl-2 sm:pl-4">Courses</h3>
+          <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground pl-2 sm:pl-4">
             {/* Data Analytics */}
             <li><Link href="/courses/data-analytics" className="hover:text-primary" aria-label="Enroll in Data Analytics course">Data Analytics</Link></li>
             
@@ -139,8 +139,8 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="space-y-4"
         >
-          <h3 className="font-medium text-lg pl-4">Contact Us</h3>
-          <ul className="space-y-3 text-sm text-muted-foreground pl-4">
+          <h3 className="font-medium text-base sm:text-lg pl-2 sm:pl-4">Contact Us</h3>
+          <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground pl-2 sm:pl-4 max-w-[95%]">
             <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 400 }} className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-primary" /> +91 93451 11211
             </motion.li>
@@ -148,8 +148,8 @@ export default function Footer() {
               <Mail className="w-4 h-4 text-primary" /> info@veltron.in
             </motion.li>
             <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 400 }} className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 text-primary mt-0.5" />
-              330, 2nd Street, Swamy Ramalingam Colony, Kolathur, Chennai, Tamil Nadu 600110
+              <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+              <span className="leading-tight">330, 2nd Street, Swamy Ramalingam Colony, Kolathur, Chennai, Tamil Nadu 600110</span>
             </motion.li>
           </ul>
 
@@ -164,10 +164,10 @@ export default function Footer() {
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="container mt-8 pt-8 border-t border-white/10"
+        className="container mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/10"
       >
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-          <div className="text-sm text-muted-foreground px-2 md:px-0">
+        <div className="flex flex-col justify-center items-center gap-2 px-3">
+          <div className="text-xs sm:text-sm text-muted-foreground px-2 md:px-0 text-center">
             © {new Date().getFullYear()} Veltron Sysmatic Solution Pvt Ltd. All rights reserved.
           </div>
           </div>
