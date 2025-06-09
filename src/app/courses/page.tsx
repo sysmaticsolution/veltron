@@ -52,7 +52,7 @@ const courseCategories = {
     { name: "CCNA Course", href: "/courses/ccna", icon: <NetworkIcon className="h-6 w-6" />, hasPage: true, description: "Master Cisco networking and security" },
   ],
   "Testing & Automation": [
-    { name: "Java Selenium Basics", href: "/courses/java-selenium", icon: <Bot className="h-6 w-6" />, hasPage: true, description: "Web automation testing with Selenium WebDriver" },
+    { name: "Java Selenium", href: "/courses/java-selenium", icon: <Bot className="h-6 w-6" />, hasPage: true, description: "Web automation testing with Selenium WebDriver" },
     { name: "Interview Preparation", href: "/courses/interview-prep", icon: <MessageSquare className="h-6 w-6" />, hasPage: true, tag: "New", description: "Ace technical interviews across domains" },
   ]
 };

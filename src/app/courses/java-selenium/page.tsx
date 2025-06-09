@@ -123,7 +123,7 @@ export default function JavaSeleniumBasicPage() {
           {...fadeUp(0)}
           className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
         >
-          Java + Selenium Basics
+          Java + Selenium
         </motion.h1>
         <motion.p
           {...fadeUp(0.15)}
