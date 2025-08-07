@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -15,37 +15,39 @@ const services = [
     title: "Data Analytics",
     description: "Transform your raw data into actionable insights with our comprehensive data analytics solutions.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
-          {/* Mini Dashboard Header */}
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
+          {/* Analytics Dashboard Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
               <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
             </div>
+            <div className="text-[6px] text-zinc-400">Analytics</div>
           </div>
           
-          {/* Mini KPI Cards */}
+          {/* Key Metrics */}
           <div className="grid grid-cols-2 gap-1 mb-1">
             <div className="bg-blue-600/20 p-1 rounded border border-blue-600/40">
-              <div className="text-[6px] text-blue-300 font-medium">Revenue</div>
-              <div className="text-[8px] font-bold text-white">+28%</div>
+              <div className="text-[6px] text-blue-300 font-medium">Growth</div>
+              <div className="text-[8px] font-bold text-white">+32%</div>
             </div>
             <div className="bg-purple-600/20 p-1 rounded border border-purple-600/40">
-              <div className="text-[6px] text-purple-300 font-medium">Users</div>
-              <div className="text-[8px] font-bold text-white">1,245</div>
+              <div className="text-[6px] text-purple-300 font-medium">ROI</div>
+              <div className="text-[8px] font-bold text-white">4.2x</div>
             </div>
           </div>
           
-          {/* Mini Chart */}
-          <div className="flex-1 flex items-end justify-around gap-0.5 mt-1 relative">
-            <div className="w-1.5 bg-blue-600 rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.1s'}}></div>
-            <div className="w-1.5 bg-purple-600 rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-1.5 bg-teal-500 rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.3s'}}></div>
-            <div className="w-1.5 bg-primary rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.4s'}}></div>
-            <div className="w-1.5 bg-blue-600 rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.5s'}}></div>
-            <div className="w-1.5 bg-purple-600 rounded-t-sm animate-dashboard-bar" style={{animationDelay: '0.6s'}}></div>
+          {/* Data Visualization */}
+          <div className="flex-1 relative bg-zinc-800/50 rounded-sm p-0.5 overflow-hidden">
+            <div className="absolute top-0.5 left-0 right-0 text-[4px] text-zinc-400 text-center">Performance</div>
+            <svg viewBox="0 0 100 50" className="w-full h-full">
+              <path d="M0,45 L10,40 L20,35 L30,38 L40,30 L50,25 L60,28 L70,20 L80,15 L90,18 L100,10" fill="none" stroke="#4f46e5" strokeWidth="1" className="animate-draw-path" strokeDasharray="1000" strokeDashoffset="1000" style={{animation: 'draw-path 8s ease-in-out infinite'}} />
+              <circle cx="20" cy="35" r="1" fill="#4f46e5" className="animate-pulse" style={{animationDuration: '3s'}} />
+              <circle cx="50" cy="25" r="1" fill="#4f46e5" className="animate-pulse" style={{animationDuration: '2s', animationDelay: '0.5s'}} />
+              <circle cx="80" cy="15" r="1" fill="#4f46e5" className="animate-pulse" style={{animationDuration: '2.5s', animationDelay: '1s'}} />
+            </svg>
           </div>
         </div>
       </div>
@@ -56,30 +58,30 @@ const services = [
     title: "Web Development",
     description: "Custom, responsive, and high-performance websites designed to elevate your brand and deliver exceptional user experiences.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
-          {/* Code Editor Header */}
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
+          {/* Modern Code Editor Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
               <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
             </div>
-            <div className="text-[6px] text-zinc-400">index.html</div>
+            <div className="text-[6px] text-zinc-400">App.jsx</div>
           </div>
           
-          {/* Code Content */}
+          {/* Modern Code Content */}
           <div className="flex-1 flex flex-col text-left text-[6px] font-mono overflow-hidden">
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '0s'}}>&lt;<span className="text-red-400">html</span>&gt;<span className="animate-blink-cursor">|</span></div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '1s'}}> &nbsp;&lt;<span className="text-red-400">head</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '2s'}}> &nbsp; &nbsp;&lt;<span className="text-red-400">title</span>&gt;<span className="text-white">Veltron</span>&lt;/<span className="text-red-400">title</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '3s'}}> &nbsp;&lt;/<span className="text-red-400">head</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '4s'}}> &nbsp;&lt;<span className="text-red-400">body</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '5s'}}> &nbsp; &nbsp;&lt;<span className="text-red-400">div</span> <span className="text-yellow-400">class</span>=<span className="text-green-400">"container"</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '6s'}}> &nbsp; &nbsp; &nbsp;&lt;<span className="text-red-400">h1</span>&gt;<span className="text-white">Hello World</span>&lt;/<span className="text-red-400">h1</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '7s'}}> &nbsp; &nbsp;&lt;/<span className="text-red-400">div</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '8s'}}> &nbsp;&lt;/<span className="text-red-400">body</span>&gt;</div>
-            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '9s'}}>&lt;/<span className="text-red-400">html</span>&gt;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '0s'}}><span className="text-purple-400">import</span> React <span className="text-purple-400">from</span> <span className="text-green-400">&#39;react&#39;</span>;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '1s'}}><span className="text-purple-400">import</span> Component <span className="text-purple-400">from</span> <span className="text-green-400">&#39;./Component&#39;</span>;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '2s'}}> </div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '3s'}}><span className="text-purple-400">function</span> <span className="text-yellow-400">App</span>() {`{`}</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '4s'}}> <span className="text-purple-400">return</span> (</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '5s'}}>  &lt;<span className="text-red-400">div</span> <span className="text-yellow-400">className</span>=<span className="text-green-400">&#34;app-container&#34;</span>&gt;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '6s'}}>   &lt;<span className="text-red-400">Component</span> /&gt;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '7s'}}>  &lt;/<span className="text-red-400">div</span>&gt;</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '8s'}}> );</div>
+            <div className="text-blue-400 animate-typing-loop" style={{animationDelay: '9s'}}>{`}`}</div>
           </div>
         </div>
       </div>
@@ -90,8 +92,8 @@ const services = [
     title: "Digital Marketing",
     description: "Strategic digital marketing solutions to boost your online presence, reach your target audience, and drive measurable results.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
           {/* App Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
@@ -136,22 +138,85 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#java-fullstack",
+    link: "/services/digital-marketing",
   },
   {
-    title: "Web Application",
-    description: "Scalable web applications with robust architecture, intuitive user interfaces, and powerful backend systems that drive business growth.",
+    title: "SEO Services",
+    description: "Boost your online visibility and rankings with our comprehensive search engine optimization strategies and technical expertise.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
-          {/* Marketing Dashboard Header */}
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
+          {/* SEO Dashboard Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
               <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
               <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
             </div>
-            <div className="text-[6px] text-zinc-400">Marketing</div>
+            <div className="text-[6px] text-zinc-400">SEO Dashboard</div>
+          </div>
+          
+          {/* Keyword Rankings */}
+          <div className="flex-1 flex flex-col gap-1">
+            <div className="flex items-center justify-between text-[5px]">
+              <span className="text-zinc-400">Keywords</span>
+              <span className="text-green-400 font-bold">+12%</span>
+            </div>
+            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-full bg-green-500 rounded-full animate-grow-width" style={{width: '78%'}}></div>
+            </div>
+            
+            <div className="flex items-center justify-between text-[5px] mt-1">
+              <span className="text-zinc-400">Traffic</span>
+              <span className="text-blue-400 font-bold">+24%</span>
+            </div>
+            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-500 rounded-full animate-grow-width" style={{width: '65%', animationDelay: '0.5s'}}></div>
+            </div>
+            
+            <div className="flex items-center justify-between text-[5px] mt-1">
+              <span className="text-zinc-400">Rankings</span>
+              <span className="text-purple-400 font-bold">+8%</span>
+            </div>
+            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-full bg-purple-500 rounded-full animate-grow-width" style={{width: '82%', animationDelay: '1s'}}></div>
+            </div>
+          </div>
+          
+          {/* Performance Metrics */}
+          <div className="flex items-center justify-center gap-2 mt-1">
+            <div className="flex flex-col items-center">
+              <div className="text-[6px] font-bold text-green-400">247</div>
+              <div className="text-[4px] text-zinc-500">Keywords</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-[6px] font-bold text-blue-400">1.2K</div>
+              <div className="text-[4px] text-zinc-500">Monthly</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-[6px] font-bold text-purple-400">#3</div>
+              <div className="text-[4px] text-zinc-500">Avg Rank</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+    link: "/services/seo-services",
+  },
+  {
+    title: "Web Application",
+    description: "Scalable web applications with robust architecture, intuitive user interfaces, and powerful backend systems that drive business growth.",
+    icon: (
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
+          {/* Web App Interface */}
+          <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+            </div>
+            <div className="text-[6px] text-zinc-400">Web App</div>
           </div>
           
           {/* Social Media Stats */}
@@ -195,113 +260,90 @@ const services = [
         </div>
       </div>
     ),
-    link: "/courses#dotnet",
+    link: "/services/web-application",
   },
   {
     title: "Mobile App Development",
     description: "Native and cross-platform mobile applications built for performance, usability, and seamless integration with your business systems.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
-          {/* Search Bar */}
-          <div className="flex items-center justify-between mb-2 border-b border-zinc-800 pb-1">
-            <div className="flex items-center gap-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
+          {/* Mobile App Header */}
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[6px] font-semibold text-white">Mobile App</div>
+            <div className="flex gap-0.5">
+              <div className="w-1 h-1 rounded-full bg-green-500"></div>
+              <div className="w-1 h-1 rounded-full bg-yellow-500"></div>
+              <div className="w-1 h-1 rounded-full bg-red-500"></div>
             </div>
-            <div className="text-[6px] text-zinc-400">Search Results</div>
           </div>
           
-          {/* Search Input */}
-          <div className="w-full h-3 bg-zinc-800 rounded-full mb-2 flex items-center px-1">
-            <div className="text-[5px] text-zinc-400 animate-pulse" style={{animationDuration: '2s', animationIterationCount: 'infinite'}}>veltron.in</div>
-            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary/80"></div>
+          {/* App Icons Grid */}
+          <div className="grid grid-cols-3 gap-1 mb-1 flex-1">
+            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '0s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0l-.34-.18-.003-.002a49.949 49.949 0 00-9.902-3.912.75.75 0 01-.231-1.337A60.65 60.65 0 0111.7 2.805z" />
+                <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016.194 12.5l.001-.001.34-.18a.75.75 0 01.707 0l.34.18.001.001a48.45 48.45 0 017.666 3.282z" />
+              </svg>
+            </div>
+            <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '0.5s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z" />
+              </svg>
+            </div>
+            <div className="bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '1s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0zM12 3a3 3 0 00-3 3v.75h6V6a3 3 0 00-3-3zm-3 8.25a3 3 0 106 0v-.75a.75.75 0 011.5 0v.75a4.5 4.5 0 11-9 0v-.75a.75.75 0 011.5 0v.75z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '1.5s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="bg-gradient-to-br from-rose-500 to-pink-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '2s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+              </svg>
+            </div>
+            <div className="bg-gradient-to-br from-cyan-500 to-sky-600 rounded flex items-center justify-center animate-pulse" style={{animationDelay: '2.5s'}}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2 h-2 text-white">
+                <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+                <path fillRule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+              </svg>
+            </div>
           </div>
           
-          {/* Search Results */}
-          <div className="flex-1 flex flex-col gap-1">
-            <div className="w-full h-2 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '0s', animationDuration: '5s'}}></div>
-            <div className="w-2/3 h-1 bg-zinc-700 rounded-sm animate-typing-loop" style={{animationDelay: '0.5s', animationDuration: '6s'}}></div>
-            <div className="w-1/2 h-1 bg-green-600/30 rounded-sm animate-typing-loop" style={{animationDelay: '1s', animationDuration: '7s'}}></div>
-            
-            <div className="w-full h-2 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
-            <div className="w-3/4 h-1 bg-zinc-700 rounded-sm animate-typing-loop" style={{animationDelay: '2.5s', animationDuration: '6s'}}></div>
-            <div className="w-1/2 h-1 bg-green-600/30 rounded-sm animate-typing-loop" style={{animationDelay: '3s', animationDuration: '7s'}}></div>
-            
-            <div className="w-full h-2 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '4s', animationDuration: '5s'}}></div>
-            <div className="w-4/5 h-1 bg-zinc-700 rounded-sm animate-typing-loop" style={{animationDelay: '4.5s', animationDuration: '6s'}}></div>
-            <div className="w-2/3 h-1 bg-green-600/30 rounded-sm animate-typing-loop" style={{animationDelay: '5s', animationDuration: '7s'}}></div>
-          </div>
-        </div>
-      </div>
-    ),
-    link: "/courses#salesforce",
-  },
-  {
-    title: "SEO Services",
-    description: "Data-driven SEO strategies to improve search visibility, increase organic traffic, and maximize your online reach and conversions.",
-    icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
-          {/* Mobile Phone Frame */}
-          <div className="w-full h-full relative border-2 border-zinc-700 rounded-lg overflow-hidden flex flex-col">
-            {/* Status Bar */}
-            <div className="h-1.5 bg-zinc-800 flex items-center justify-between px-1">
-              <div className="text-[4px] text-zinc-400">9:41</div>
-              <div className="flex items-center gap-0.5">
-                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
-                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
-                <div className="w-1.5 h-1.5 bg-zinc-400 rounded-full"></div>
-              </div>
+          {/* Navigation Bar */}
+          <div className="h-3 w-full bg-zinc-800 rounded flex items-center justify-around px-1">
+            <div className="flex flex-col items-center">
+              <div className="w-2 h-0.5 bg-primary rounded-full mb-0.5"></div>
+              <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
             </div>
-            
-            {/* App Content */}
-            <div className="flex-1 bg-zinc-900 p-1 flex flex-col gap-1">
-              {/* App Header */}
-              <div className="w-full h-2 bg-primary/20 rounded-sm flex items-center justify-center">
-                <div className="text-[4px] text-primary">Veltron App</div>
-              </div>
-              
-              {/* App Cards */}
-              <div className="grid grid-cols-2 gap-1">
-                <div className="bg-blue-600/20 p-0.5 rounded-sm border border-blue-600/40 animate-pulse" style={{animationDuration: '2.5s', animationIterationCount: 'infinite'}}>
-                  <div className="w-full h-1 bg-blue-600/30 rounded-sm mb-0.5"></div>
-                  <div className="w-2/3 h-0.5 bg-blue-600/20 rounded-sm"></div>
-                </div>
-                <div className="bg-purple-600/20 p-0.5 rounded-sm border border-purple-600/40 animate-pulse" style={{animationDuration: '3s', animationDelay: '0.5s', animationIterationCount: 'infinite'}}>
-                  <div className="w-full h-1 bg-purple-600/30 rounded-sm mb-0.5"></div>
-                  <div className="w-2/3 h-0.5 bg-purple-600/20 rounded-sm"></div>
-                </div>
-              </div>
-              
-              {/* App List */}
-              <div className="flex flex-col gap-0.5 mt-0.5">
-                <div className="w-full h-1.5 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '0s', animationDuration: '4s'}}></div>
-                <div className="w-full h-1.5 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '1s', animationDuration: '5s'}}></div>
-                <div className="w-full h-1.5 bg-zinc-800 rounded-sm animate-typing-loop" style={{animationDelay: '2s', animationDuration: '6s'}}></div>
-              </div>
+            <div className="flex flex-col items-center">
+              <div className="w-2 h-0.5 bg-zinc-500 rounded-full mb-0.5"></div>
+              <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
             </div>
-            
-            {/* Navigation Bar */}
-            <div className="h-2 bg-zinc-800 flex items-center justify-around">
-              <div className="w-1 h-1 bg-primary rounded-full"></div>
-              <div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
-              <div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
-              <div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
+            <div className="flex flex-col items-center">
+              <div className="w-2 h-0.5 bg-zinc-500 rounded-full mb-0.5"></div>
+              <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-2 h-0.5 bg-zinc-500 rounded-full mb-0.5"></div>
+              <div className="w-1 h-1 bg-zinc-500 rounded-full"></div>
             </div>
           </div>
         </div>
       </div>
     ),
-    link: "/services/seo-services",
+    link: "/services/mobile-app-development",
   },
   {
     title: "Corporate Training",
     description: "Customized technology training programs designed to upskill your workforce and keep your team at the cutting edge of industry developments.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
           {/* Training Dashboard Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
@@ -357,8 +399,8 @@ const services = [
     title: "Skill Development",
     description: "Comprehensive technology training programs to enhance your team's capabilities with modern tools, languages, and frameworks for professional growth.",
     icon: (
-      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300">
-        <div className="w-full h-full flex flex-col">
+      <div className="w-full aspect-square max-w-[150px] mx-auto relative bg-zinc-900/80 rounded-lg p-4 flex items-center justify-center overflow-hidden shadow-lg shadow-black/20 hover:shadow-primary/20 transition-shadow duration-300 h-[150px]">
+        <div className="w-full h-full flex flex-col service-card-icon-content">
           {/* Skill Development Header */}
           <div className="flex items-center justify-between mb-1 border-b border-zinc-800 pb-1">
             <div className="flex items-center gap-1">
@@ -405,7 +447,7 @@ const services = [
         </div>
       </div>
     ),
-    link: "/services/skill-development",
+    link: "/courses",
   },
 ];
 
@@ -420,7 +462,7 @@ const courseCategories = [
         <path d="m19 9-5 5-4-4-3 3" />
       </svg>
     ),
-    link: "/courses#data-analytics",
+    link: "/courses/data-analytics",
   },
   {
     title: "Java Fullstack",
@@ -433,7 +475,7 @@ const courseCategories = [
         <path d="M21 17v-4c0-2-2-4-4-4s-4 2-4 4v4" />
       </svg>
     ),
-    link: "/courses#java-fullstack",
+    link: "/courses/java-fullstack",
   },
   {
     title: ".NET Complete",
@@ -447,7 +489,7 @@ const courseCategories = [
         <path d="m16 7-4 10" />
       </svg>
     ),
-    link: "/courses#dotnet",
+    link: "/courses/dotnet",
   },
   {
     title: "Salesforce",
@@ -463,7 +505,7 @@ const courseCategories = [
         <path d="m9 19-2-2 2-2" />
       </svg>
     ),
-    link: "/courses#salesforce",
+    link: "/courses/salesforce",
   },
 ];
 
@@ -737,7 +779,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Professional Training</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Industry-relevant courses designed to build skills that match today's job market demands
+              Industry-relevant courses designed to build skills that match today&#39;s job market demands
             </p>
           </div>
           
